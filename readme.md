@@ -7,7 +7,7 @@
 * `apt-get install python-numpy python-scipy` or `pip install numpy scipy`
 * `pip install rpy2==2.3.0`
 * `pip install pandas==0.15.2`
-* `pip install yahoo-finance`
+* `pip install requests`
 
 ## Client requierements:
 
