@@ -33,8 +33,8 @@ timeJumps <- function(n, T){
     return(timeArr);
 }
 
-#Simulation of stock X at time t_j, with t_j in timeJumps. i starts from 0.
-X_t <- function(r, volatility, X_0, j, i, deltaT, weinerMotion, vectorResult){
+#Simulation of stock X. i starts from 0.
+X <- function(r, volatility, X_0, j, i, deltaT, weinerMotion, vectorResult){
     if (j == 0){
         return(c(X_0));
     }
@@ -42,8 +42,43 @@ X_t <- function(r, volatility, X_0, j, i, deltaT, weinerMotion, vectorResult){
         return(vectorResult);
     }
     X_sig <- r*X_0*deltaT + volatility*X_0*deltaW(i, weinerMotion) + X_0;
-    return(X_t(r, volatility, X_sig, j, i+1, deltaT, weinerMotion, c(vectorResult, X_sig)));
+    return(X(r, volatility, X_sig, j, i+1, deltaT, weinerMotion, c(vectorResult, X_sig)));
 }
+
+#Simulation of stock X at time t_j, with t_j in timeJumps. i starts from 0. return only final value of X
+X_t <- function(r, volatility, X_0, j, i, deltaT, weinerMotion){
+    if (j == 0 || j == i){
+        return(X_0);
+    }
+    X_sig <- r*X_0*deltaT + volatility*X_0*deltaW(i, weinerMotion) + X_0;
+    return(X_t(r, volatility, X_sig, j, i+1, deltaT, weinerMotion));
+}
+#T days of business, and historicalData is close price.
+volatility <- function(T, historicalData){
+    dailyPerformace <- c();
+    n <- length(historicalData)
+    for(i in 1:n-1){
+        u_i <- log(historicalData[i+1]/historicalData[i]);
+        dailyPerformace <- c(dailyPerformace, u_i);
+    }
+    s <- sqrt((1/(n-2)) * sum(dailyPerformace^2) - (1/((n-1)*(n-2))) * (sum(dailyPerformace))^2);
+    return(s/sqrt(1/T));
+}
+#risk-free rate, measured in days.
+r <- function(days, r){
+    return((days/365)*r);
+}
+
+#Price Function
+priceFunction <- function(typeOfInv, t, x_t, SimulationsOnT, T, risk){
+    if(typeOfInv == "buy"){
+        return(exp(-risk * (T - t)) * mean(pmax(SimulationsOnT - x_t, 0)));
+    }
+    if(typeOfInv == "sell"){
+        return(exp(-risk * (T - t)) * mean(pmax(x_t - SimulationsOnT, 0)));
+    }
+}
+
 #Simulate can simulate only one time, the motion of a stock at current value X, with time T.
 #Ex: Simulate(0.2, 0.4, runif(1, -1e+5, 1e+5), 1, 100, 1)
 Simulate <- function(r, volatility, seed, T, n, X){
@@ -51,9 +86,11 @@ Simulate <- function(r, volatility, seed, T, n, X){
     deltaT = T/n;
     set.seed(seed);
     z_norm_vector <- rnorm(n, 0, deltaT);
-    wienerproccess <- Weiner(z_norm_vector)#W(n+1, 0, z_norm_vector, c());
+    wienerproccess <- Weiner(z_norm_vector);#W(n+1, 0, z_norm_vector, c());
     timejumps <- timeJumps(n, T);
-    stockPrices <- X_t(r, volatility, X, n, 0, deltaT, wienerproccess, c(X))
+    stockPrices <- X(r, volatility, X, n, 0, deltaT, wienerproccess, c(X));
+    finalPriceOfX <- X_t(r, volatility, X, n, 0, deltaT, wienerproccess);
+    print(finalPriceOfX);
     return(cbind(timejumps, stockPrices))
     
 }
