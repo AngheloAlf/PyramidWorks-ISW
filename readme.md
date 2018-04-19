@@ -4,6 +4,8 @@
 
 * [Python](https://www.python.org/downloads/)
 * [R](https://www.r-project.org/)
+* [nodejs](https://nodejs.org/)
+* [npm](https://www.npmjs.com/)
 * `apt-get install python-numpy python-scipy` or `pip install numpy scipy`
 * `pip install rpy2==2.3.0`
 * `pip install pandas==0.15.2`
