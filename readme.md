@@ -16,6 +16,12 @@
 - [ ] Get the _risk-free interest rate_ from the corresponding country.
 - [ ] _Option_ calculation.
 
+## Start interface
+* `cd beck-and-call`
+* `npm install`
+* `npm run electron-build`
+
+
 ## Team's cloud data:
 
 * [Google Drive](https://drive.google.com/drive/folders/1ImoxDg-X9XvoDuq1IE1NtKyoGu5R1sTX)

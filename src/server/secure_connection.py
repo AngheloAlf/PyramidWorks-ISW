@@ -5,15 +5,11 @@ import ssl
 
 
 class SecureConnection(object):
-    NETBUFFER = 1024
-    ERROR = "\x00"
-
     def __init__(self, ip, port, certFile, keyFile):
         # type: (str, int, str, str) -> None
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.host = ip
         self.port = port
-        self.timeout = None
         self.context = None
         self.certFile = certFile
         self.keyFile = keyFile
@@ -57,10 +53,13 @@ class SecureConnection(object):
         else:
             raise Exception("Not connected")
 
-    def close(self):
-        self.connection.close()
+    def closeConnection(self):
+        if self.connected:
+            self.connection.close()
+            self.connected = False
+
+    def closeSocket(self):
         self.sock.close()
-        self.connected = False
 
 
 HOST = '127.0.0.1'
@@ -71,13 +70,18 @@ KEY = 'cert/private.key'
 if __name__ == '__main__':
     conn = SecureConnection(HOST, PORT, CERT, KEY)
     conn.bindServer()
-    print("Waiting connections...")
-    conn.accept()
-    data = None
-    conn.send("Hi. Type 0 to exit")
-    while data != "0":
-        data = conn.recv()
-        print(data)
-        conn.send(data)
-    conn.close()
+    while True:
+        try:
+            print("Waiting connections...")
+            conn.accept()
+            data = None
+            conn.send("Hi. Type 0 to exit")
+            while data != "0":
+                data = conn.recv()
+                print((data, ))
+                conn.send(data)
+        except Exception as e:
+            print(e)
+            # raise e
+        conn.closeConnection()
     # main()
