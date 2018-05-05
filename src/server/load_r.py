@@ -3,6 +3,7 @@ import numpy
 # import pandas
 # from rpy2.robjects.packages import importr
 import rpy2.robjects as ro
+import csv
 # import pandas.rpy.common as com
 
 
@@ -74,4 +75,31 @@ class r_script(object):
 
 
 if __name__ == "__main__":
-    r_script("../r_scripts/dummy.r").load_function("dummyFunc2", 4, 4.5)
+    HistoricalData = []
+    with open('../../csvs/daily_AMD.csv') as csvData:
+        readCSV = csv.reader(csvData, delimiter=',')
+        businessDays = 126
+        day = -1
+        for row in readCSV:
+            if day == businessDays:
+                break
+            if day >= 0:
+                HistoricalData.append(float(row[1]))
+            day += 1
+    #print(r_script("../r_scripts/slave.R").load_function("volatility", 126, HistoricalData)[0])
+    """Simulate(0.2, 0.4, runif(1, -1e+5, 1e+5), 1, 100, 1)"""
+    #print(r_script("../r_scripts/slave.R").load_function("Simulate", 0.2, 0.4, 20, 1, 100, 1)[0])
+    """MonteCarloSimulation <- 
+    function(businessDays, x, k, t, n, historicalData, numberOfSimulations, typeOfInv, riskFreeRate)"""
+    print(r_script("../r_scripts/slave.R")
+          .load_function("MonteCarloSimulation",
+                         businessDays,
+                         HistoricalData[0],#stock current value
+                         13,#strike price
+                         0,#delay
+                         100,#discretization degree
+                         HistoricalData,#daily open value of stock
+                         10000,#number of simulations
+                         'put',#type of option
+                         0.0221,#risk-free rate
+                         )[0])
