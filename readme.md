@@ -4,6 +4,8 @@
 
 * [Python](https://www.python.org/downloads/)
 * [R](https://www.r-project.org/)
+* [nodejs](https://nodejs.org/)
+* [npm](https://www.npmjs.com/)
 * `apt-get install python-numpy python-scipy` or `pip install numpy scipy`
 * `pip install rpy2==2.3.0`
 * `pip install pandas==0.15.2`
@@ -15,6 +17,12 @@
 - [ ] Download automaticly data (Yahoo) and store it localy.
 - [ ] Get the _risk-free interest rate_ from the corresponding country.
 - [ ] _Option_ calculation.
+
+## Start interface
+* `cd beck-and-call`
+* `npm install`
+* `npm run electron-build`
+
 
 ## Team's cloud data:
 
