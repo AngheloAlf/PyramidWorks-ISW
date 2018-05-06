@@ -53,6 +53,13 @@ X_t <- function(r, volatility, X_0, j, i, deltaT, weinerMotion){
     X_sig <- r*X_0*deltaT + volatility*X_0*deltaW(i, weinerMotion) + X_0;
     return(X_t(r, volatility, X_sig, j, i+1, deltaT, weinerMotion));
 }
+
+X_t_ <- function (r, volatility, X, n, deltaT, weinerMotion){
+    for (i in 1:n-1){
+        X <- r*X*deltaT + volatility*X*deltaW(i, weinerMotion) + X;
+    }
+    return(X);
+} 
 #T days of business, and historicalData is close price.
 volatility <- function(T, historicalData){
     dailyPerformace <- c();
@@ -66,33 +73,47 @@ volatility <- function(T, historicalData){
 }
 #risk-free rate, measured in days.
 r <- function(days, r){
-    return((days/365)*r);
+    return((days/252)*r);
 }
 
 #Price Function
-priceFunction <- function(typeOfInv, t, x_t, SimulationsOnT, T, risk){
-    if(typeOfInv == "buy"){
-        return(exp(-risk * (T - t)) * mean(pmax(SimulationsOnT - x_t, 0)));
+priceFunction <- function(typeOfInv, t, k, SimulationsOnT, T, risk){
+    if(typeOfInv == "call"){
+        return(exp(-risk * (T - t)) * mean(pmax(SimulationsOnT - k, 0)));
     }
-    if(typeOfInv == "sell"){
-        return(exp(-risk * (T - t)) * mean(pmax(x_t - SimulationsOnT, 0)));
+    if(typeOfInv == "put"){
+        return(exp(-risk * (T - t)) * mean(pmax(k - SimulationsOnT, 0)));
     }
 }
 
 #Simulate can simulate only one time, the motion of a stock at current value X, with time T.
 #Ex: Simulate(0.2, 0.4, runif(1, -1e+5, 1e+5), 1, 100, 1)
 Simulate <- function(r, volatility, seed, T, n, X){
-    result <- c();
+    #result <- c();
     deltaT = T/n;
     set.seed(seed);
     z_norm_vector <- rnorm(n, 0, deltaT);
-    wienerproccess <- Weiner(z_norm_vector);#W(n+1, 0, z_norm_vector, c());
-    timejumps <- timeJumps(n, T);
-    stockPrices <- X(r, volatility, X, n, 0, deltaT, wienerproccess, c(X));
-    finalPriceOfX <- X_t(r, volatility, X, n, 0, deltaT, wienerproccess);
-    print(finalPriceOfX);
-    return(cbind(timejumps, stockPrices))
+    weinerproccess <- Weiner(z_norm_vector);#W(n+1, 0, z_norm_vector, c());
+    #timejumps <- timeJumps(n, T);
+    #stockPrices <- X(r, volatility, X, n, 0, deltaT, wienerproccess, c(X));
+    finalPriceOfX_ <- X_t_(r, volatility, X, n, deltaT, weinerproccess);
+    return(finalPriceOfX_);
     
+}
+
+MonteCarloSimulation <- function(businessDays, x, k, t, n, historicalData, numberOfSimulations, typeOfInv, riskFreeRate){
+    T = businessDays/252;
+    riskFreeRate = riskFreeRate * T;
+    volatility_data = volatility(businessDays, historicalData);
+    simulations = c();
+    seeds_history = c();
+    for (i in 1:numberOfSimulations){
+        seed <- runif(1, -1e+5, 1e+5);
+        seeds_history <- c(seeds_history, seed);
+        simulations <- c(simulations, Simulate(riskFreeRate, volatility_data, seed, T, n, x));
+    }
+    #priceFunction <- function(typeOfInv, t, k, SimulationsOnT, T, risk)
+    return(priceFunction(typeOfInv, t, k, simulations, T, riskFreeRate));
 }
 # deltaW <- function (T, t, n, i, z_norm_arr){
 #     deltaT <- T/n

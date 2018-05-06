@@ -5,3 +5,16 @@ dummyFunc <- function(x, y, z){
 dummyFunc2 <-function(x, y){
     return(x-y);
 }
+
+dummyFunc3 <- function(x, y, z){
+    return(sum(z) + x + y);
+}
+
+dummyFunc4 <- function(x, y, z){
+    if (y == "hello"){
+        return(1 + x + sum(z));
+    }
+    else{
+        return(0);
+    }
+}
