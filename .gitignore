@@ -1,2 +1,3 @@
 # ignore all files inside .idea
 .idea/*
+/material-dashboard-angular/node_modules/
