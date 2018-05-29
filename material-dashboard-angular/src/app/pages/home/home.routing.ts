@@ -12,6 +12,8 @@ import { IconsComponent } from './icons/icons.component';
 import { MapsComponent } from './maps/maps.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { UpgradeComponent } from './upgrade/upgrade.component';
+import { OptionsComponent } from './options/options.component';
+import { AddListOptionsComponent} from './options/components/add-list-options/add-list-options.component';
 
 
 const routes: Routes =[
@@ -25,6 +27,10 @@ const routes: Routes =[
       { path: 'maps',           component: MapsComponent },
       { path: 'notifications',  component: NotificationsComponent },
       { path: 'upgrade',        component: UpgradeComponent },
+      { path: 'options',        component: OptionsComponent,
+      children: [
+        {path: 'addListOptions', component: AddListOptionsComponent}
+      ]}
     ]
   }
 ];

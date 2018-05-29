@@ -1,0 +1,10 @@
+Django==1.11.13
+django-filter==1.1.0
+djangorestframework==3.8.2
+Jinja2==2.10
+Markdown==2.6.11
+MarkupSafe==1.0
+numpy==1.14.2
+pytz==2018.4
+rpy2==2.9.3
+six==1.11.0

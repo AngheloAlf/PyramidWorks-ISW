@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 
 import { ComponentsModule } from '../../components/components.module';
 import { HomeRoutingModule } from './home.routing';
+import { OptionsModule } from './options/options.module';
 
 import { HomeComponent } from './home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -18,21 +19,21 @@ import { UpgradeComponent } from './upgrade/upgrade.component';
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule,
-    
+
     ComponentsModule,
     HomeRoutingModule,
+    OptionsModule,
     RouterModule,
   ],
   declarations: [
-    HomeComponent, 
-    DashboardComponent, 
-    UserProfileComponent, 
-    TableListComponent, 
-    TypographyComponent, 
-    IconsComponent, 
-    MapsComponent, 
-    NotificationsComponent, 
+    HomeComponent,
+    DashboardComponent,
+    UserProfileComponent,
+    TableListComponent,
+    TypographyComponent,
+    IconsComponent,
+    MapsComponent,
+    NotificationsComponent,
     UpgradeComponent,
   ]
 })

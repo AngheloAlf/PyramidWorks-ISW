@@ -1,5 +1,5 @@
-import GuiManager
-from load_r import r_script
+from Beck_and_Call_API.calculation import GuiManager
+from Beck_and_Call_API.calculation.load_r import r_script
 from functools import partial
 import csv
 import tkMessageBox

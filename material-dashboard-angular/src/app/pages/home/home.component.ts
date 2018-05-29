@@ -10,14 +10,14 @@ declare var $:any;
 })
 export class HomeComponent implements OnInit {
   location: Location;
-  
+
   constructor(location: Location) {
     this.location = location;
   }
 
   ngOnInit() {
-    $.getScript('../../../assets/js/material-dashboard.js');
-    $.getScript('../../../assets/js/initMenu.js');
+    $.getScript('assets/js/material-dashboard.js');
+    $.getScript('assets/js/initMenu.js');
   }
 
   isMaps(path){

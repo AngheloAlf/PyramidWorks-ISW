@@ -12,8 +12,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     HomeModule,
   ],
   declarations: [
-    LoginComponent, 
-    SignupComponent, 
+    LoginComponent,
+    SignupComponent,
     NotFoundComponent,
   ]
 })
