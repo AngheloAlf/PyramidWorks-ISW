@@ -13,5 +13,6 @@ urlpatterns = [
     url(r'', include(router.urls)),
     url(r'^company/(?P<pk>\d+)/stocks/$', views.StockList.as_view()),
     url(r'companies/$', views.CompanyListCreateView.as_view()),
-    url(r'company/(?P<pk>\d+)/$', views.CompanyUpdateDestroyView.as_view(), name="company-detail")
+    url(r'company/(?P<pk>\d+)/$', views.CompanyUpdateDestroyView.as_view(), name="company-detail"),
+    url(r'calculation/', views.getCalculation),
 ]
