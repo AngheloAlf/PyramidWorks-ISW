@@ -10,6 +10,10 @@
 * `pip install rpy2==2.3.0`
 * `pip install pandas==0.15.2`
 * `pip install requests`
+* `pip install Django==1.11.13`
+* `pip install djangorestframework`
+* `pip install markdown`
+* `pip install django-filter`
 
 ## Client requierements:
 
@@ -22,6 +26,11 @@
 * `cd beck-and-call`
 * `npm install`
 * `npm run electron-build`
+
+## Start Django server
+
+* `cd src/server/Beck_and_Call_API`
+* `python manage.py runserver`
 
 
 ## Team's cloud data:
