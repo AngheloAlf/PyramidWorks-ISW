@@ -4,7 +4,9 @@ from .models import Company, Option, Stock
 from rest_framework import viewsets, generics, mixins
 from .serializers import UserSerializer, GroupSerializer, StockSerializer, OptionCompanySerializer, CompanySerializer
 import requests
+
 from .calculation import load_r
+from django.http import JsonResponse
 
 Alpha_Vantage_API_KEY = 'ZP37OWO9E0ZEXJY4'
 
@@ -79,7 +81,10 @@ class StockList(generics.ListAPIView):
 
 
 def getCalculation(request):
-
+    if request.method != 'GET':
+        return JsonResponse({'error': 'GET', 'value': 0})
+    if 'id' not in request.GET or 'days' not in request.GET or 'delay' not in request.GET or 'disc' not in request.GET or 'simu' not in request.GET or 'tasa' not in request.GET:
+        return JsonResponse({'error': 'parameters', 'value': 0})
 
     option_id = int(request.GET['id'])
     days = int(request.GET['days'])
@@ -88,16 +93,12 @@ def getCalculation(request):
     simu = int(request.GET['simu'])
     tasa = float(request.GET['tasa'])
 
-    print('wea de la wea')
-
     option = Option.objects.filter(id=option_id)
+    strike_price = option[0].strike_price
     if option[0].type:
         option_type = 'put'
     else:
         option_type = 'call'
-    strike_price = option[0].strike_price
-
-    print('wea de la wea')
 
     hd = option[0].company.stock_set.all().order_by('-date')[:days]
     historical_data = list(map(lambda x: float(x.open_price), hd))
@@ -115,10 +116,4 @@ def getCalculation(request):
                          tasa,#risk-free rate
                          )[0]
 
-    print(result)
-
-
-    # historical_data_url = '/api/company/5/stocks/?length=' + str(days)
-
-    print('wea de la wea')
-
+    return JsonResponse({'error': 'None', 'value': result})
