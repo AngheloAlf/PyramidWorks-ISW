@@ -23,15 +23,20 @@
 - [ ] _Option_ calculation.
 
 ## Start interface
-* `cd beck-and-call`
+* `cd material-dashboard-angular`
 * `npm install`
 * `npm run electron-build`
+Or if You want see the web interface
+* `npm start`
 
 ## Start Django server
 
 * `cd src/server/Beck_and_Call_API`
 * `python manage.py runserver`
 
+## Set up BackEnd Container:
+* `cd src/server/Beck_and_Call_API`
+* `docker-compose up`
 
 ## Team's cloud data:
 
