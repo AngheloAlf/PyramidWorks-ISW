@@ -1,0 +1,81 @@
+<div class="card card-nav-tabs">
+  <div class="card-header" data-background-color="green">
+    <h2 class="title">Empresas</h2>
+    <div class="nav-tabs-navigation">
+      <div class="nav-tabs-wrapper row">
+        <div class="form-group form-black is-empty col-xs-8">
+          <input type="text" class="form-control" placeholder="Buscar Empresa">
+          <span class="material-input"></span>
+        </div>
+        <div class="col-xs-4">
+          <button type="button" rel="tooltip" title="Buscar" class="btn btn-white btn-round btn-just-icon">
+            <i class="material-icons">search</i>
+            <div class="ripple-container"></div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-content">
+    <div class="tab-content">
+      <div class="tab-pane active" id="profile">
+        <table class="table">
+          <thead class="text-success">
+            <tr>
+              <th>Ver Acciones</th>
+              <th>Nombre</th>
+              <th>Ticker</th>
+              <th>Accion</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let company of companies">
+              <td>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="optionsCheckboxes" (click)="sendCompany(company)" [disabled]="!companiesToCompare.includes(company) && companiesToCompare.length >= maxCompanies">
+                  </label>
+                </div>
+              </td>
+              <td>{{company.name}}</td>
+              <td>{{company.ticker}}</td>
+              <td class="td-actions text-right">
+                <button type="button" rel="tooltip" title="Añadir Opción" class="btn btn-warning btn-simple btn-xs">
+                  <i class="material-icons">business_center</i>
+                </button>
+                <button type="button" rel="tooltip" title="Eliminar Empresa" class="btn btn-danger btn-simple btn-xs">
+                  <i class="material-icons">close</i>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Añadir Empresa:
+              </td>
+              <form [formGroup]="form" (ngSubmit)="addCompany(form.value)">
+                <td>
+                  <div class="form-group label-floating">
+                    <label class="control-label">Nombre</label>
+                    <input type="text" class="form-control" formControlName="name">
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group label-floating">
+                    <label class="control-label">Ticker</label>
+                    <input type="text" class="form-control" formControlName="ticker">
+                  </div>
+                </td>
+                <td>
+                  <button type="submit" rel="tooltip" title="Añadir Empresa" class="btn btn-success btn-round btn-just-icon" [disabled]=!form.valid>
+                    <i class="material-icons">add</i>
+                  </button>
+                </td>
+              </form>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<div class="main-content">
+  <div class="row">
+    <div class="col-lg-5 col-md-12">
+      <app-companies-list (companyEvent)= "receiveCompanies($event)" [companiesToCompare]="companiesToCompare" [maxCompanies]="maxCompanies"></app-companies-list>
+    </div>
+    <div class="col-lg-7 col-md-12">
+      <app-companies-stock-charts [companies]="companiesToCompare" [dummy]="dummy" [@chartState]="(companiesToCompare.length != 0) ? 'show' : 'hide'"></app-companies-stock-charts>
+    </div>
+  </div>
+</div>

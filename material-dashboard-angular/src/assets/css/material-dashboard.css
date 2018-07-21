@@ -1203,7 +1203,7 @@ h2.title {
   background: transparent;
   box-shadow: none;
 }
-.btn.btn-facebook,
+.btn.btn-facebook, .btn.btn-blue,
 .navbar .navbar-nav > li > a.btn.btn-facebook {
   background-color: #3b5998;
   color: #fff;

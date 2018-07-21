@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ComponentsModule } from '../../components/components.module';
 import { HomeRoutingModule } from './home.routing';
@@ -15,6 +16,10 @@ import { IconsComponent } from './icons/icons.component';
 import { MapsComponent } from './maps/maps.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { UpgradeComponent } from './upgrade/upgrade.component';
+import { CompaniesComponent } from './companies/companies.component';
+import { CompaniesListComponent } from './companies/companies-list/companies-list.component';
+import { CompaniesStockChartsComponent } from './companies/companies-stock-charts/companies-stock-charts.component';
+
 
 @NgModule({
   imports: [
@@ -22,8 +27,10 @@ import { UpgradeComponent } from './upgrade/upgrade.component';
 
     ComponentsModule,
     HomeRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     OptionsModule,
-    RouterModule,
+    RouterModule
   ],
   declarations: [
     HomeComponent,
@@ -35,6 +42,9 @@ import { UpgradeComponent } from './upgrade/upgrade.component';
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
+    CompaniesComponent,
+    CompaniesListComponent,
+    CompaniesStockChartsComponent,
   ]
 })
 export class HomeModule { }
