@@ -130,23 +130,12 @@ class CompanyOptionList(generics.ListCreateAPIView):
         serializer.save(company_id=int(self.kwargs['pk']))
 
 
-class CompanyOptionUpdate(generics.RetrieveUpdateAPIView):
+class CompanyOptionUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = OptionSerializer
-
     def get_queryset(self):
         return Option.objects.filter(company=int(self.kwargs['pk']))
 
     def get_object(self):
         queryset = self.get_queryset()
         return get_object_or_404(queryset, id=int(self.kwargs['opt_id']))
-
-
-class CompanyOptionDelete(generics.RetrieveDestroyAPIView):
-    serializer_class = OptionSerializer
-
-    def get_queryset(self):
-        return Option.objects.filter(company=int(self.kwargs['pk']))
-
-    def get_object(self):
-        return get_object_or_404(self.get_queryset(), id=int(self.kwargs['opt_id']))
 
