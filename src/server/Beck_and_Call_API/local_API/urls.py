@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'calculation/', views.getCalculation),
     url(r'company/(?P<pk>\d+)/options/$', views.CompanyOptionList.as_view()),
     url(r'company/(?P<pk>\d+)/options/(?P<opt_id>[0-9]+)/$', views.CompanyOptionUpdateDelete.as_view()),
+    url(r'^company/(?P<company_id>\d+)/stocks/update$', views.updateStocksCompany),
 ]

@@ -8,6 +8,7 @@ import requests
 from .calculation import load_r
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from django.core.exceptions import ObjectDoesNotExist
 
 Alpha_Vantage_API_KEY = 'ZP37OWO9E0ZEXJY4'
 
@@ -139,3 +140,24 @@ class CompanyOptionUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
         queryset = self.get_queryset()
         return get_object_or_404(queryset, id=int(self.kwargs['opt_id']))
 
+
+def updateStocksCompany(request, company_id):
+    comp_id = int(company_id)
+    company = Company.objects.get(id=comp_id)
+    ticket = company.ticker
+
+    payload = {
+        'function': 'TIME_SERIES_DAILY',
+        'symbol': ticket,
+        'outputsize': 'full',
+        'apikey': Alpha_Vantage_API_KEY}
+    Stock_data = requests.get('https://www.alphavantage.co/query', params=payload).json()['Time Series (Daily)']
+    stocks_to_add = list()
+    for key, val in Stock_data.items():
+        try:
+            Stock.objects.filter(open_price=val['1. open'], company=comp_id).get(date=key)
+        except ObjectDoesNotExist:
+            stocks_to_add.append(Stock(date=key, open_price=val['1. open'], company=company))
+
+    Stock.objects.bulk_create(stocks_to_add)
+    return JsonResponse({'error': 'None', 'done': 'done'})
