@@ -18,6 +18,8 @@ class Option(models.Model):
     bid_price = models.DecimalField(max_digits=12, decimal_places=2)
     ask_price = models.DecimalField(max_digits=12, decimal_places=2)
     expire_date = models.DateField()
+    to = models.BooleanField(default=False)
+    pricing = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
 
     def __str__(self):
         return self.contract_name
@@ -27,3 +29,8 @@ class Stock(models.Model):
 
     date = models.DateField()
     open_price = models.DecimalField(max_digits=12, decimal_places=2)
+
+    high = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    low = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    close = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    volume = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)

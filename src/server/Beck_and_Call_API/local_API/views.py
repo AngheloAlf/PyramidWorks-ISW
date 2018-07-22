@@ -2,11 +2,13 @@
 from django.contrib.auth.models import User, Group
 from .models import Company, Option, Stock
 from rest_framework import viewsets, generics, mixins
-from .serializers import UserSerializer, GroupSerializer, StockSerializer, OptionCompanySerializer, CompanySerializer
+from .serializers import UserSerializer, GroupSerializer, StockSerializer, OptionCompanySerializer, CompanySerializer, OptionSerializer
 import requests
 
 from .calculation import load_r
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.core.exceptions import ObjectDoesNotExist
 
 Alpha_Vantage_API_KEY = 'ZP37OWO9E0ZEXJY4'
 
@@ -79,7 +81,7 @@ class StockList(generics.ListAPIView):
             return company.stock_set.all().order_by('-date')
         return company.stock_set.all().order_by('-date')[:int(self.request.GET.get("length"))]
 
-
+ # TODO> Move this outside of the views
 def getCalculation(request):
     if request.method != 'GET':
         return JsonResponse({'error': 'GET', 'value': 0})
@@ -117,3 +119,45 @@ def getCalculation(request):
                          )[0]
 
     return JsonResponse({'error': 'None', 'value': result})
+
+
+class CompanyOptionList(generics.ListCreateAPIView):
+    serializer_class = OptionSerializer
+
+    def get_queryset(self):
+        return Option.objects.filter(company=int(self.kwargs['pk']))
+
+    def perform_create(self, serializer):
+        serializer.save(company_id=int(self.kwargs['pk']))
+
+
+class CompanyOptionUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = OptionSerializer
+    def get_queryset(self):
+        return Option.objects.filter(company=int(self.kwargs['pk']))
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        return get_object_or_404(queryset, id=int(self.kwargs['opt_id']))
+
+
+def updateStocksCompany(request, company_id):
+    comp_id = int(company_id)
+    company = Company.objects.get(id=comp_id)
+    ticket = company.ticker
+
+    payload = {
+        'function': 'TIME_SERIES_DAILY',
+        'symbol': ticket,
+        'outputsize': 'full',
+        'apikey': Alpha_Vantage_API_KEY}
+    Stock_data = requests.get('https://www.alphavantage.co/query', params=payload).json()['Time Series (Daily)']
+    stocks_to_add = list()
+    for key, val in Stock_data.items():
+        try:
+            Stock.objects.filter(open_price=val['1. open'], company=comp_id).get(date=key)
+        except ObjectDoesNotExist:
+            stocks_to_add.append(Stock(date=key, open_price=val['1. open'], company=company))
+
+    Stock.objects.bulk_create(stocks_to_add)
+    return JsonResponse({'error': 'None', 'done': 'done'})
