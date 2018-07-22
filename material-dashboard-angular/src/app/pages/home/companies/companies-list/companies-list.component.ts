@@ -2,6 +2,7 @@ import { Component, OnInit, OnChanges, Output, Input, EventEmitter} from '@angul
 import { CompaniesService } from '../../../../services/companies.service';
 import { Company } from '../../../../models/Company';
 import { FormBuilder, FormGroup, Validators} from  '@angular/forms';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-companies-list',
@@ -10,8 +11,8 @@ import { FormBuilder, FormGroup, Validators} from  '@angular/forms';
 })
 export class CompaniesListComponent implements OnInit, OnChanges {
 
-  companies: Company[];
-  currentCompany: Company;
+  companies: Company[] = [];
+  companySelected: Company;
   newCompany: Company;
   form: FormGroup;
 
@@ -25,7 +26,7 @@ export class CompaniesListComponent implements OnInit, OnChanges {
 
   constructor(private companiesData:CompaniesService, private fb: FormBuilder) {
     this.form = fb.group({
-      'name': [null, Validators.compose([Validators.required, Validators.maxLength(10)])],
+      'name': [null, Validators.compose([Validators.required, Validators.maxLength(70)])],
       'ticker': [null, Validators.compose([Validators.required, Validators.maxLength(10)])]
     });
   }
@@ -34,37 +35,50 @@ export class CompaniesListComponent implements OnInit, OnChanges {
     this.listCompanies();
   }
 
+  selectCompany(company: Company){
+    this.companySelected = company;
+  }
+
+  deselect(){
+    this.companySelected = undefined;
+  }
+
   listCompanies(): void{
     this.companiesData.list().subscribe(companies => {
       this.companies = companies;
     })
   }
 
-  getCompany(company: Company | number): void{
+  getCompany(company: Company): void{
+    this.companySelected = company;
     this.companiesData.get(company).subscribe(company => {
       console.log(company);
-      this.currentCompany = company;
     })
   }
 
   addCompany(company: Company): void{
     this.newCompany = company;
-    console.log(company);
-    this.companiesData.add(company).subscribe(() => {
-      this.listCompanies();
+    this.companiesData.add(company).subscribe( response => {
+      console.log(response);
+      this.companies.push(response);
+      console.log(this.companies);
     })
   }
 
-  editCompany(company: Company): void{
-    this.companiesData.edit(company).subscribe( () => {
+  editCompany(): void{
+    this.companiesData.edit(this.companySelected).subscribe( () => {
+      this.deselect();
       this.listCompanies();
     });
   }
 
-  deleteCompany(company: Company | number): void {
-    this.companiesData.delete(company).subscribe( () => {
-      this.listCompanies();
-    });
+  deleteCompany(company: Company): void {
+    if(confirm(`¿Estas seguro que quieres eliminar ${company.name} y sus datos relacionados?`)){
+      this.companiesData.delete(company).subscribe(() => {
+        _.remove(this.companies, e => e.id == company.id);
+        console.log(this.companies);
+      });
+    }
   }
 
   sendCompany(company: Company){

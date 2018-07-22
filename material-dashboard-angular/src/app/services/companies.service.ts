@@ -29,7 +29,8 @@ export class CompaniesService {
   }
 
   edit(company: Company){
-    return this.http.put<Company>('/api/company/', company, httpOptions);
+    const data = {name: company.name, ticker: company.ticker};
+    return this.http.put<Company>(`/api/company/${company.id}/`, company, httpOptions);
   }
 
   delete(company: Company | number){

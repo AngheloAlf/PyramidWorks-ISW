@@ -2,7 +2,6 @@ import { Component, OnInit, Input, OnChanges, ElementRef, SimpleChange, SimpleCh
 import { Company } from '../../../../models/Company';
 import { Stock } from '../../../../models/Stock';
 import { StocksService } from '../../../../services/stocks.service';
-import { binaryInsert } from './binaryInsert';
 import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 import * as _ from 'lodash';
 
@@ -56,25 +55,11 @@ export class CompaniesStockChartsComponent implements OnInit, OnChanges {
     this.setChart(this.chartTraces);
   }
 
-  /*public set companies(val){
-    this._companies = val;
-    this.getStocks(this.days);
-    this.setChart(this.stocks, this.dates);
-    console.log(val);
-  }*/
-
  constructor(private StocksData: StocksService) { }
 
   ngOnInit() {
   }
   
-  /*addDates(currentDates, dates): string[]{
-    return dates.reduce( (coll, date) => {
-        binaryInsert(date, coll);
-        return coll;
-      }, currentDates);
-  }*/
-
   addStocksTrace(days){
     let idx = 0;
     this.chartTraces = [];

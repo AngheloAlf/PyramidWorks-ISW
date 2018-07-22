@@ -38,16 +38,34 @@
                   </label>
                 </div>
               </td>
-              <td>{{company.name}}</td>
+              <td>
+                <p *ngIf="company != companySelected">
+                    {{company.name}}
+                </p>
+                <div *ngIf="company == companySelected" class="form-group">
+                    <input #companyNameField type="text" [(ngModel)]="companySelected.name" (keydown.esc)="deselect()" (keyup.enter)="editCompany()" class="form-control" />
+                </div>
+              </td>
               <td>{{company.ticker}}</td>
-              <td class="td-actions text-right">
-                <button type="button" rel="tooltip" title="Añadir Opción" class="btn btn-warning btn-simple btn-xs">
+              <td *ngIf="company != companySelected" class="td-actions text-right">
+                <button type="button" rel="tooltip" title="Cambiar Nombre" (click)="selectCompany(company)"  class="btn btn-warning btn-simple btn-xs">
+                    <i class="material-icons">edit</i>
+                </button>
+                <button type="button" rel="tooltip" title="Añadir Opción"  class="btn btn-info btn-simple btn-xs">
                   <i class="material-icons">business_center</i>
                 </button>
-                <button type="button" rel="tooltip" title="Eliminar Empresa" class="btn btn-danger btn-simple btn-xs">
+                <button type="button" rel="tooltip" title="Eliminar Empresa" (click)="deleteCompany(company)" class="btn btn-danger btn-simple btn-xs">
                   <i class="material-icons">close</i>
                 </button>
               </td>
+              <td *ngIf="company == companySelected" class="text-right">
+                  <button type="button" rel="tooltip" title="Hacer Cambios" (click)=editCompany() class="btn btn-success btn-simple btn-xs">
+                      <i class="material-icons">check_circle</i>
+                  </button>
+                  <button type="button" rel="tooltip" title="Cancelar" (click)="deselect()"  class="btn btn-danger btn-simple btn-xs">
+                      <i class="material-icons">cancel</i>
+                  </button>
+                </td>
             </tr>
             <tr>
               <td>
