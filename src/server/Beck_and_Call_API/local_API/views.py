@@ -1,9 +1,9 @@
- # Create your views here.
 from django.contrib.auth.models import User, Group
 from .models import Company, Option, Stock
 from rest_framework import viewsets, generics, mixins
 from .serializers import UserSerializer, GroupSerializer, StockSerializer, OptionCompanySerializer, CompanySerializer, OptionSerializer
 import requests
+from . import AlphaVantageService
 
 from .calculation import load_r
 from django.http import JsonResponse
@@ -38,24 +38,8 @@ class CompanyListCreateView(generics.ListCreateAPIView):
     serializer_class = CompanySerializer
 
     def perform_create(self, serializer):
-        company_data = serializer.validated_data
-        payload = {
-            'function': 'TIME_SERIES_DAILY',
-            'symbol': company_data['ticker'],
-            'outputsize': 'full',
-            'apikey': Alpha_Vantage_API_KEY}
-        Stock_data = requests.get('https://www.alphavantage.co/query', params=payload).json()['Time Series (Daily)']
         company = serializer.save()
-        Stock.objects.bulk_create([Stock(date=key, open_price=val['1. open'], company=company) for key, val in Stock_data.items()])
-        '''
-        for key, val in Stock_data.items():
-            Stock(date=key, open_price=val['1. open'], company=company).save()
-        '''
-        '''
-        except KeyError:
-            print("Error, no hay registros de la compañia " + payload['symbol'])
-        except:
-            print("Error desconocido")'''
+        AlphaVantageService.addAllCompanyStocks(company)
 
 
 class CompanyUpdateDestroyView( mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
@@ -66,7 +50,7 @@ class CompanyUpdateDestroyView( mixins.RetrieveModelMixin, mixins.UpdateModelMix
         return self.retrieve(request, *args, **kwargs)
 
     def put(self, request, *args, **kwargs):
-        return self.update(request, *args, *kwargs)
+        return self.update(request, *args, **kwargs)
 
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
@@ -77,7 +61,7 @@ class StockList(generics.ListAPIView):
 
     def get_queryset(self):
         company = Company.objects.get(id=int(self.kwargs['pk']))
-        if self.request.GET.get("length") == "all" or self.request.GET.get("length") == None:
+        if self.request.GET.get("length") == "all" or self.request.GET.get("length") is None:
             return company.stock_set.all().order_by('-date')
         return company.stock_set.all().order_by('-date')[:int(self.request.GET.get("length"))]
 
@@ -142,22 +126,15 @@ class CompanyOptionUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
 
 
 def updateStocksCompany(request, company_id):
-    comp_id = int(company_id)
-    company = Company.objects.get(id=comp_id)
-    ticket = company.ticker
+    company = Company.objects.get(id=int(company_id))
+    AlphaVantageService.addNewCompanyStocks(company)
 
-    payload = {
-        'function': 'TIME_SERIES_DAILY',
-        'symbol': ticket,
-        'outputsize': 'full',
-        'apikey': Alpha_Vantage_API_KEY}
-    Stock_data = requests.get('https://www.alphavantage.co/query', params=payload).json()['Time Series (Daily)']
-    stocks_to_add = list()
-    for key, val in Stock_data.items():
-        try:
-            Stock.objects.filter(open_price=val['1. open'], company=comp_id).get(date=key)
-        except ObjectDoesNotExist:
-            stocks_to_add.append(Stock(date=key, open_price=val['1. open'], company=company))
-
-    Stock.objects.bulk_create(stocks_to_add)
     return JsonResponse({'error': 'None', 'done': 'done'})
+
+
+def updateAllStocks(request):
+    responses_dict = dict()
+    for x in Company.objects.all():
+        print(x.id)
+        responses_dict[x.id] = updateStocksCompany(request, x.id)
+    return JsonResponse({'error': 'None', 'responses': responses_dict})

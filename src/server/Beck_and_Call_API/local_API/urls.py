@@ -5,10 +5,10 @@ from . import views
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
-router.register(r'options', views.OptionViewSet)
 
 urlpatterns = [
     url(r'', include(router.urls)),
+    url(r'options/', views.OptionViewSet),
     url(r'^company/(?P<pk>\d+)/stocks/$', views.StockList.as_view()),
     url(r'company/$', views.CompanyListCreateView.as_view()),
     url(r'company/(?P<pk>\d+)/$', views.CompanyUpdateDestroyView.as_view(), name="company-detail"),
@@ -16,4 +16,5 @@ urlpatterns = [
     url(r'company/(?P<pk>\d+)/options/$', views.CompanyOptionList.as_view()),
     url(r'company/(?P<pk>\d+)/options/(?P<opt_id>[0-9]+)/$', views.CompanyOptionUpdateDelete.as_view()),
     url(r'^company/(?P<company_id>\d+)/stocks/update$', views.updateStocksCompany),
+    url(r'^stocks/update$', views.updateAllStocks),
 ]

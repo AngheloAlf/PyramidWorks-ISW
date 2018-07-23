@@ -1,6 +1,6 @@
 from django.db import models
 
-# Create your models here.
+
 class Company(models.Model):
     name = models.CharField(max_length=50)
     ticker = models.SlugField(max_length=10)
@@ -21,8 +21,11 @@ class Option(models.Model):
     to = models.BooleanField(default=False)
     pricing = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
 
+    region = models.DecimalField(max_digits=12, decimal_places=2)
+
     def __str__(self):
         return self.contract_name
+
 
 class Stock(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
