@@ -2,6 +2,7 @@ import { Component, OnInit, OnChanges, Output, Input, EventEmitter} from '@angul
 import { CompaniesService } from '../../../../services/companies.service';
 import { Company } from '../../../../models/Company';
 import { FormBuilder, FormGroup, Validators} from  '@angular/forms';
+import { Router } from '@angular/router';
 import * as _ from 'lodash';
 
 @Component({
@@ -24,7 +25,7 @@ export class CompaniesListComponent implements OnInit, OnChanges {
     console.log('hello');
   }
 
-  constructor(private companiesData:CompaniesService, private fb: FormBuilder) {
+  constructor(private companiesData:CompaniesService, private fb: FormBuilder, private router: Router) {
     this.form = fb.group({
       'name': [null, Validators.compose([Validators.required, Validators.maxLength(70)])],
       'ticker': [null, Validators.compose([Validators.required, Validators.maxLength(10)])]
@@ -41,6 +42,10 @@ export class CompaniesListComponent implements OnInit, OnChanges {
 
   deselect(){
     this.companySelected = undefined;
+  }
+
+  options(company: Company){
+    this.router.navigate(['home/company', company.id, 'options']);
   }
 
   listCompanies(): void{

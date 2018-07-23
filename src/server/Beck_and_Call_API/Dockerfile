@@ -14,3 +14,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 #Copy API into WORKDIR
 COPY . .
+#Do Migrations
+RUN python manage.py migrate

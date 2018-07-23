@@ -20,7 +20,7 @@ exports.config = {
     print: function() {}
   },
   beforeLaunch: function() {
-    require('ts-node').register({
+    require('ts-node/dist').register({
       project: 'e2e/tsconfig.e2e.json'
     });
   },

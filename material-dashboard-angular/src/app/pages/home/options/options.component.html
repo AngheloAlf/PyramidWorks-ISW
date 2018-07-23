@@ -1,14 +1,38 @@
 <div class="main-content">
   <div class="container-fluid">
+    <div class="card card-plain">
+        <div class="card-header" data-background-color="blue">
+          <div class="row">
+            <div class="col-md-8">
+              <h2 class="title">Tus Opciones en {{company.name}} - {{company.ticker}}</h2>
+            </div>
+            <div class="col-md-4">
+              <p>poner boton para desplegar formulario</p>
+            </div>
+          </div>
+        </div>
+    </div>
     <div class="row">
-      <div class="col-md-10">
-        <router-outlet></router-outlet>
-      </div>
-      <div class="col-md-2">
-        <a [routerLink]="['addListOptions']" class="btn btn-primary">
-          <i class="material-icons">add_circle</i>
-          <p>Añadir Lista</p>
-        </a>
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header" data-background-color="red">
+            <div class="row">
+              <div class="col-md-8">
+                  <h3 class="title">Opciones para Vender</h3>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group form-black">
+                    <label for="exampleFormControlSelect1">Tipo de Opción</label>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                      <option>Put</option>
+                      <option>Call</option>
+                    </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <app-option-list [company]="company" [parameters]="parameters"></app-option-list>
+        </div>
       </div>
     </div>
   </div>
