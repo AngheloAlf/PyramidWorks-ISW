@@ -24,7 +24,7 @@
 
 ## Start interface
 * `cd material-dashboard-angular`
-* `npm install`
+* `npm install --save`
 * `npm run electron-build`
 Or if You want see the web interface
 * `npm start`
