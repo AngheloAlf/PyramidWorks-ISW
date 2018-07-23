@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ComponentsModule } from '../../components/components.module';
 import { HomeRoutingModule } from './home.routing';
-import { OptionsModule } from './options/options.module';
 
 import { HomeComponent } from './home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -19,6 +18,8 @@ import { UpgradeComponent } from './upgrade/upgrade.component';
 import { CompaniesComponent } from './companies/companies.component';
 import { CompaniesListComponent } from './companies/companies-list/companies-list.component';
 import { CompaniesStockChartsComponent } from './companies/companies-stock-charts/companies-stock-charts.component';
+import { OptionsComponent } from './options/options.component';
+import { OptionListComponent } from './options/option-list/option-list.component'
 
 
 @NgModule({
@@ -29,7 +30,6 @@ import { CompaniesStockChartsComponent } from './companies/companies-stock-chart
     HomeRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    OptionsModule,
     RouterModule
   ],
   declarations: [
@@ -45,6 +45,8 @@ import { CompaniesStockChartsComponent } from './companies/companies-stock-chart
     CompaniesComponent,
     CompaniesListComponent,
     CompaniesStockChartsComponent,
+    OptionsComponent,
+    OptionListComponent
   ]
 })
 export class HomeModule { }

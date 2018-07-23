@@ -15,7 +15,7 @@ export class CompaniesService {
   }
 
   list(){
-    return this.http.get<Company[]>('/api/companies/');
+    return this.http.get<Company[]>('/api/company/');
   }
 
   get(company: Company | number){
@@ -25,11 +25,10 @@ export class CompaniesService {
   }
 
   add(company: Company){
-    return this.http.post<Company>('/api/companies/', company, httpOptions);
+    return this.http.post<Company>('/api/company/', company, httpOptions);
   }
 
   edit(company: Company){
-    const data = {name: company.name, ticker: company.ticker};
     return this.http.put<Company>(`/api/company/${company.id}/`, company, httpOptions);
   }
 

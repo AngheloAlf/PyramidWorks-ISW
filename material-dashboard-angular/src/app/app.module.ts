@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 
 import { CompaniesService } from './services/companies.service';
 import { StocksService } from './services/stocks.service';
+import { OptionsService } from './services/options.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { StocksService } from './services/stocks.service';
   ],
   providers: [
     CompaniesService,
-    StocksService
+    StocksService,
+    OptionsService
   ],
   bootstrap: [AppComponent]
 })
