@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr *ngFor="let option of options">
         <td>
             <div class="checkbox">
               <label>
@@ -20,9 +20,12 @@
               </label>
             </div>
         </td>
-        <td>Niger</td>
-        <td>Oud-Turnhout</td>
-        <td class="text-danger">$36,738</td>
+        <td>{{option.contract_name}}</td>
+        <td>{{option.strike_price}}</td>
+        <td>{{option.bid_price}}</td>
+        <td>{{option.ask_price}}</td>
+        <td>{{option.expire_date}}</td>
+        <td class="text-danger">{{option.pricing}}</td>
       </tr>
     </tbody>
   </table>

@@ -1,29 +1,36 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Company } from '../../../../models/Company'
+import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Company } from '../../../../models/Company';
+import { Option } from '../../../../models/Option';
+import { OptionsService } from '../../../../services/options.service';
 
 @Component({
   selector: 'app-option-list',
   templateUrl: './option-list.component.html',
   styleUrls: ['./option-list.component.css']
 })
-export class OptionListComponent implements OnInit {
+export class OptionListComponent implements OnInit, OnChanges {
 
   @Input() company: Company;
   @Input() parameters: {
     calculation: string,
-    seller: { 
-      type: string
-    },
-    buyer: {
-      type: string
-    }
+    to: boolean,
+    type: boolean
   };
+  options: Option[];
 
-  constructor() { }
+  constructor(private DataOptions: OptionsService) {
+   }
 
   ngOnInit() {
   }
 
-  listOptions(){}
+  ngOnChanges(){
+    this.listOptions();
+  }
 
+  listOptions(){
+    this.DataOptions.list(this.company).subscribe( options => {
+      this.options = options.filter( option => option.to === this.parameters.to && option.type === this.parameters.type);
+    })
+  }
 }

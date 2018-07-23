@@ -23,7 +23,7 @@ export class OptionsService {
     else{
       url = '/api/options/'; 
     }
-    return this.http.get<Option>(url);
+    return this.http.get<Option[]>(url);
   }
 
   get(company: Company | number, option: Option | number){
