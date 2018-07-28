@@ -6,14 +6,8 @@
 * [R](https://www.r-project.org/)
 * [nodejs](https://nodejs.org/)
 * [npm](https://www.npmjs.com/)
-* `apt-get install python-numpy python-scipy` or `pip install numpy scipy`
-* `pip install rpy2==2.3.0`
-* `pip install pandas==0.15.2`
-* `pip install requests`
-* `pip install Django==1.11.13`
-* `pip install djangorestframework`
-* `pip install markdown`
-* `pip install django-filter`
+* `pip3 install numpy scipy pandas==0.15.2 requests Django==1.11.13 djangorestframework markdown django-filter`
+* `pip3 install rpy2`
 
 ## Client requierements:
 
@@ -26,7 +20,7 @@
 * `cd material-dashboard-angular`
 * `npm install --save`
 * `npm run electron-build`
-Or if You want see the web interface
+Or if you want see the interface via browser
 * `npm start`
 
 ## Start Django server
