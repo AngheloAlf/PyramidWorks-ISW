@@ -5,10 +5,10 @@ from . import views
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
+router.register(r'options', views.OptionViewSet)
 
 urlpatterns = [
     url(r'', include(router.urls)),
-    url(r'options/', views.OptionViewSet),
     url(r'^company/(?P<pk>\d+)/stocks/$', views.StockList.as_view()),
     url(r'company/$', views.CompanyListCreateView.as_view()),
     url(r'company/(?P<pk>\d+)/$', views.CompanyUpdateDestroyView.as_view(), name="company-detail"),

@@ -11,25 +11,29 @@ import { CompaniesService } from '../../../services/companies.service';
 export class OptionsComponent implements OnInit {
 
   company: Company;
-  parameters: {
-    calculation: string,
-    seller: { 
-      type: string
+  parameters = {
+    seller: {
+      to: 'seller',
+      calculation: '',
+      type: ''
     },
-    buyer: {
-      type: string
-    }
+    buyer: { 
+      to: 'buyer',
+      calculation: '',
+      type: ''
+    },
   };
 
-  constructor(private route: ActivatedRoute, private companyData: CompaniesService) { }
+  constructor(private route: ActivatedRoute, private companyData: CompaniesService) {
+    
+  }
 
   ngOnInit() {
     this.companyData.get(Number(this.route.snapshot.paramMap.get('id'))).subscribe(company => {
       this.company = company;
       console.log(this.company);
-    })
+    });
   }
 
   
-
 }

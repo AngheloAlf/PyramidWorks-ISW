@@ -23,15 +23,44 @@
               <div class="col-md-4">
                 <div class="form-group form-black">
                     <label for="exampleFormControlSelect1">Tipo de Opción</label>
-                    <select class="form-control" id="exampleFormControlSelect1">
+                    <select class="form-control" [(ngModel)]="parameters.seller.type" id="exampleFormControlSelect1">
                       <option>Put</option>
                       <option>Call</option>
+                    </select>
+                    <select class="form-control" [(ngModel)]="parameters.seller.calculation" id="exampleFormControlSelect1">
+                      <option>Simulación Europea</option>
                     </select>
                 </div>
               </div>
             </div>
           </div>
-          <app-option-list [company]="company" [parameters]="parameters"></app-option-list>
+          <app-option-list [company]="company" [parameters]="parameters.seller"></app-option-list>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header" data-background-color="red">
+            <div class="row">
+              <div class="col-md-8">
+                  <h3 class="title">Opciones para Comprar</h3>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group form-black">
+                    <label for="exampleFormControlSelect1">Tipo de Opción</label>
+                    <select class="form-control" [(ngModel)]="parameters.buyer.type" id="exampleFormControlSelect1">
+                      <option>Put</option>
+                      <option>Call</option>
+                    </select>
+                    <select class="form-control" [(ngModel)]="parameters.buyer.calculation" id="exampleFormControlSelect1">
+                      <option>Simulación Europea</option>
+                    </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <app-option-list [company]="company" [parameters]="parameters.buyer"></app-option-list>
         </div>
       </div>
     </div>

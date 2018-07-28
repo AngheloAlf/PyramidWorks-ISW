@@ -25,6 +25,7 @@ export class OptionListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(){
+    console.log(this.parameters);
     this.listOptions();
   }
 
