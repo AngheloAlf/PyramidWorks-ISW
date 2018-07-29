@@ -103,7 +103,7 @@ export class OptionsComponent implements OnInit {
     option.pricing = null;
     option.to = this.to === 'sell' ? true : false;
     this.optionService.add(this.company, option).subscribe( response => {
-      
+
     })
   }
 }
