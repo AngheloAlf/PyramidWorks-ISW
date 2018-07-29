@@ -1,4 +1,107 @@
 <div class="main-content">
+
+  <div class="modal fade" id="popUpOptionForm" role="dialog" aria-labelledby="Modal_title" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content container-fluid">
+
+        <div class="card card-plain">
+          <div class="">
+
+            <div class="card-header modal-header" data-background-color="red">
+              <div class="row">
+                <div class="col-md-8">
+                  <h3 class="title modal-title">Opciones para Vender</h3>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="">
+              <div class="modal-body">
+                <ngForm>
+
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group label-floating">
+                        <label class="control-label">Contract name</label>
+                        <input type="text" class="form-control" id="contract_name">
+                      </div>
+                    </div>
+
+                    <br />
+
+                    <div class="col-md-4">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" name="optionsCheckboxes" id="type">
+                          Type
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" name="optionsCheckboxes" id="to">
+                          Buy or sell
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="form-group label-floating">
+                        <label class="control-label">Strike price</label>
+                        <input type="text" class="form-control" id="strike_price">
+                      </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                      <div class="form-group label-floating">
+                        <label class="control-label">Bid price</label>
+                        <input type="text" class="form-control" id="bid_price">
+                      </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                      <div class="form-group label-floating">
+                        <label class="control-label">Ask price</label>
+                        <input type="text" class="form-control" id="ask_price">
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col-sm-4">
+                    <div class="form-group">
+                      <label class="control-label">Expire date</label>
+                      <input type="date" class="form-control" id="expire_date">
+                    </div>
+                  </div>
+                  </div>
+
+
+                </ngForm>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
   <div class="container-fluid">
     <div class="card card-plain">
         <div class="card-header" data-background-color="blue">
@@ -7,7 +110,9 @@
               <h2 class="title">Tus Opciones en {{company.name}} - {{company.ticker}}</h2>
             </div>
             <div class="col-md-4">
-              <p>poner boton para desplegar formulario</p>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#popUpOptionForm">
+                Boton que trigerea la wea
+              </button>
             </div>
           </div>
         </div>
@@ -34,6 +139,7 @@
               </div>
             </div>
           </div>
+
           <app-option-list [company]="company" [parameters]="parameters.seller"></app-option-list>
         </div>
       </div>
@@ -66,3 +172,4 @@
     </div>
   </div>
 </div>
+

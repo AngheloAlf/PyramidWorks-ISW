@@ -17,7 +17,7 @@ export class OptionsComponent implements OnInit {
       calculation: '',
       type: ''
     },
-    buyer: { 
+    buyer: {
       to: 'buyer',
       calculation: '',
       type: ''
@@ -25,7 +25,7 @@ export class OptionsComponent implements OnInit {
   };
 
   constructor(private route: ActivatedRoute, private companyData: CompaniesService) {
-    
+
   }
 
   ngOnInit() {
@@ -35,5 +35,4 @@ export class OptionsComponent implements OnInit {
     });
   }
 
-  
 }
