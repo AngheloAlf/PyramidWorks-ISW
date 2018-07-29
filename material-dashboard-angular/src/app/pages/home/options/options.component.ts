@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Company } from '../../../models/Company';
 import { Option } from '../../../models/Option';
 import { OptionsService } from '../../../services/options.service';
 import { CompaniesService } from '../../../services/companies.service';
 import { FormBuilder, FormGroup, Validators} from  '@angular/forms';
+import { $ } from 'protractor';
 
 interface Parameter{
   seller: {
@@ -25,6 +26,10 @@ interface Parameter{
 })
 export class OptionsComponent implements OnInit {
 
+  @ViewChild('sellerList') sellerList;
+  @ViewChild('buyerList') buyerList;
+  @ViewChild('popUpOptionForm') popUpOptionForm: ElementRef;
+
   company: Company;
   parameters: Parameter = {
     seller: {
@@ -40,6 +45,7 @@ export class OptionsComponent implements OnInit {
   };
   form: FormGroup;
   to;
+  ready: boolean = false;
 
   constructor(private route: ActivatedRoute, private companyData: CompaniesService, private optionService: OptionsService, private fb: FormBuilder) {
     this.form = fb.group({
@@ -57,6 +63,7 @@ export class OptionsComponent implements OnInit {
   ngOnInit() {
     this.companyData.get(Number(this.route.snapshot.paramMap.get('id'))).subscribe(company => {
       this.company = company;
+      this.ready = true;
       console.log(this.company);
     });
   }
@@ -103,7 +110,13 @@ export class OptionsComponent implements OnInit {
     option.pricing = null;
     option.to = this.to === 'sell' ? true : false;
     this.optionService.add(this.company, option).subscribe( response => {
-      
+      if(option.to){
+        this.sellerList.listOptions();
+      }
+      else{
+        this.buyerList.listOptions();
+      }
+      //this.popUpOptionForm.modal('hide');
     })
   }
 }

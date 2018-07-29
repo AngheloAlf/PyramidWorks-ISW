@@ -107,7 +107,7 @@
 
 
   <div class="container-fluid">
-    <div class="card card-plain">
+    <div class="card card-plain" *ngIf="ready">
       <div class="card-header" data-background-color="blue">
         <div class="row">
           <div class="col-md-12">
@@ -145,7 +145,7 @@
             </div>
           </div>
 
-          <app-option-list [company]="company" [parameters]="parameters.seller"></app-option-list>
+          <app-option-list [company]="company" [parameters]="parameters.seller" #sellerList></app-option-list>
         </div>
       </div>
     </div>
@@ -177,7 +177,7 @@
               </div>
             </div>
           </div>
-          <app-option-list [company]="company" [parameters]="parameters.buyer"></app-option-list>
+          <app-option-list [company]="company" [parameters]="parameters.buyer" #buyerList></app-option-list>
         </div>
       </div>
     </div>
