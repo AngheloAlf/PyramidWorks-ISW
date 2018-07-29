@@ -62,7 +62,6 @@ export class OptionsComponent implements OnInit {
   }
 
   change(to, option, optionValue){
-    console.log('wea');
     let seller = this.parameters.seller;
     let buyer = this. parameters.buyer;
     if(to === 'seller'){

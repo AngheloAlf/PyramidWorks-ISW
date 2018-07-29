@@ -22,6 +22,8 @@ export class OptionListComponent implements OnInit, OnChanges {
     }
   }
   options: Option[];
+  optionToEdit;
+
 
   constructor(private DataOptions: OptionsService) {
    }
@@ -41,5 +43,13 @@ export class OptionListComponent implements OnInit, OnChanges {
                                               && option.region === this._parameters.region);
       this.show = this.options.length == 0 ? false : true;
     });
+  }
+
+  deleteOption(option: Option){
+    if(confirm(`¿Estas seguro que quieres eliminar ${option.contract_name}?`)){
+      this.DataOptions.delete(this.company,option.id).subscribe(res => {
+        this.listOptions();
+      });
+    }
   }
 }
