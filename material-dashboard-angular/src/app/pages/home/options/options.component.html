@@ -10,7 +10,7 @@
             <div class="card-header modal-header" data-background-color="red">
               <div class="row">
                 <div class="col-md-8">
-                  <h3 class="title modal-title">Opciones para Vender</h3>
+                  <h3 class="title modal-title">Agregar opciones</h3>
                 </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
@@ -23,51 +23,36 @@
                 <ngForm>
 
                   <div class="row">
-                    <div class="col-md-4">
+
+                    <!-- <div class="col-md-2">
+                    </div> -->
+
+                    <div class="col-md-12">
                       <div class="form-group label-floating">
                         <label class="control-label">Contract name</label>
                         <input type="text" class="form-control" id="contract_name">
                       </div>
                     </div>
 
-                    <br />
-
-                    <div class="col-md-4">
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox" name="optionsCheckboxes" id="type">
-                          Type
-                        </label>
-                      </div>
-                    </div>
-
-                    <div class="col-md-4">
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox" name="optionsCheckboxes" id="to">
-                          Buy or sell
-                        </label>
-                      </div>
-                    </div>
                   </div>
 
 
                   <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-md-4">
                       <div class="form-group label-floating">
                         <label class="control-label">Strike price</label>
                         <input type="text" class="form-control" id="strike_price">
                       </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-md-4">
                       <div class="form-group label-floating">
                         <label class="control-label">Bid price</label>
                         <input type="text" class="form-control" id="bid_price">
                       </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-md-4">
                       <div class="form-group label-floating">
                         <label class="control-label">Ask price</label>
                         <input type="text" class="form-control" id="ask_price">
@@ -77,12 +62,34 @@
 
 
                   <div class="row">
-                    <div class="col-sm-4">
-                    <div class="form-group">
-                      <label class="control-label">Expire date</label>
-                      <input type="date" class="form-control" id="expire_date">
+
+                    <div class="col-md-6">
+                      <select class="selectpicker">
+                        <option value="true">Put</option>
+                        <option value="false">Call</option>
+                      </select>
                     </div>
+
+                    <div class="col-md-6">
+                      <select class="selectpicker" id="to">
+                        <option value="false">Buy</option>
+                        <option value="true">Sell</option>
+                      </select>
+                    </div>
+
                   </div>
+
+                  <div class="row">
+
+                    <div class="col-md-2">
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">Expire date</label>
+                        <input type="date" class="form-control" id="expire_date">
+                      </div>
+                    </div>
                   </div>
 
 

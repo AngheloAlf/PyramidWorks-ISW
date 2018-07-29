@@ -24,7 +24,6 @@ class StockSerializer(serializers.ModelSerializer):
 class OptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Option
-        # fields = ('id', 'contract_name', 'type', 'strike_price', 'bid_price', 'ask_price', 'expire_date')
         fields = '__all__'
         read_only_fields = ('company',)
 
