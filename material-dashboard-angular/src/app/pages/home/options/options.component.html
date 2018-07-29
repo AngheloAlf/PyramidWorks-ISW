@@ -19,8 +19,8 @@
             </div>
 
             <form [formGroup]="form" (ngSubmit)="addOption(form.value)">
-            <div class="">
-              <div class="modal-body">
+              <div class="">
+                <div class="modal-body">
 
                   <div class="row">
 
@@ -34,9 +34,9 @@
 
 
                     <div class="col-md-6">
-                      <select class="selectpicker" name="region">
-                        <option value="true" >Europea</option>
-                        <option value="false" >Americana</option>
+                      <select class="selectpicker" formControlName="region">
+                        <option [ngValue]="true">Europea</option>
+                        <option [ngValue]="false">Americana</option>
                       </select>
                     </div>
 
@@ -47,21 +47,21 @@
                     <div class="col-md-4">
                       <div class="form-group label-floating">
                         <label class="control-label">Strike price</label>
-                        <input type="text" class="form-control" id="strike_price" formControlName="strike_price">
+                        <input type="number" step="any" class="form-control" id="strike_price" formControlName="strike_price">
                       </div>
                     </div>
 
                     <div class="col-md-4">
                       <div class="form-group label-floating">
                         <label class="control-label">Bid price</label>
-                        <input type="text" class="form-control" id="bid_price" formControlName="bid_price">
+                        <input type="number" step="any" class="form-control" id="bid_price" formControlName="bid_price">
                       </div>
                     </div>
 
                     <div class="col-md-4">
                       <div class="form-group label-floating">
                         <label class="control-label">Ask price</label>
-                        <input type="text" class="form-control" id="ask_price" formControlName="ask_price">
+                        <input type="number" step="any" class="form-control" id="ask_price" formControlName="ask_price">
                       </div>
                     </div>
                   </div>
@@ -70,16 +70,16 @@
                   <div class="row">
 
                     <div class="col-md-6">
-                      <select class="selectpicker" name="type">
-                        <option value="true" >Put</option>
-                        <option value="false" >Call</option>
+                      <select class="selectpicker" formControlName="type">
+                        <option [ngValue]="true">Put</option>
+                        <option [ngValue]="false">Call</option>
                       </select>
                     </div>
 
                     <div class="col-md-6">
-                      <select class="selectpicker" name="to">
-                        <option value="false">Buy</option>
-                        <option value="true">Sell</option>
+                      <select class="selectpicker" formControlName="to">
+                        <option [ngValue]="false">Buy</option>
+                        <option [ngValue]="true">Sell</option>
                       </select>
                     </div>
 
@@ -93,20 +93,20 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label class="control-label">Expire date</label>
-                        <input type="date" class="form-control" id="expire_date" formControlName="date">
+                        <input type="date" class="form-control" id="expire_date" formControlName="expire_date">
                       </div>
                     </div>
                   </div>
 
 
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
-              </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
 
 
-            </div>
+              </div>
             </form>
           </div>
 
@@ -119,18 +119,18 @@
 
   <div class="container-fluid">
     <div class="card card-plain">
-        <div class="card-header" data-background-color="blue">
-          <div class="row">
-            <div class="col-md-8">
-              <h2 class="title">Tus Opciones en {{company.name}} - {{company.ticker}}</h2>
-            </div>
-            <div class="col-md-4">
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#popUpOptionForm">
-                Boton que trigerea la wea
-              </button>
-            </div>
+      <div class="card-header" data-background-color="blue">
+        <div class="row">
+          <div class="col-md-8">
+            <h2 class="title">Tus Opciones en {{company.name}} - {{company.ticker}}</h2>
+          </div>
+          <div class="col-md-4">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#popUpOptionForm">
+              Boton que trigerea la wea
+            </button>
           </div>
         </div>
+      </div>
     </div>
     <div class="row">
       <div class="col-md-12">
@@ -138,20 +138,25 @@
           <div class="card-header" data-background-color="red">
             <div class="row">
               <div class="col-md-8">
-                  <h3 class="title">Opciones para Vender</h3>
+                <h3 class="title">Opciones para Vender</h3>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-2">
                 <div class="form-group form-black">
-                    <label for="exampleFormControlSelect1">Tipo de Opción</label>
-                    <select #selectTypeSeller class="form-control" [value]="parameters.seller.type" (change)="change('seller', 'type', selectTypeSeller.value)">
-                      <option>Put</option>
-                      <option>Call</option>
-                    </select>
-                    <select #selectRegionSeller class="form-control" [value]="parameters.seller.region" (change)="change('seller', 'calculation', selectRegionSeller.value)">
-                      <option>Europea</option>
-                      <option>Americana</option>
-                    </select>
+                  <label for="exampleFormControlSelect1">Tipo de Opción</label>
+                  <select #selectTypeSeller class="form-control" [value]="parameters.seller.type" (change)="change('seller', 'type', selectTypeSeller.value)">
+                    <option>Put</option>
+                    <option>Call</option>
+                  </select>
+                  <select #selectRegionSeller class="form-control" [value]="parameters.seller.region" (change)="change('seller', 'calculation', selectRegionSeller.value)">
+                    <option>Europea</option>
+                    <option>Americana</option>
+                  </select>
                 </div>
+              </div>
+              <div class="col-md-2">
+                <button type="button" (click)="to = 'sell'" class="btn btn-primary" data-toggle="modal" data-target="#popUpOptionForm">
+                  Añadir Opción
+                </button>
               </div>
             </div>
           </div>
@@ -166,20 +171,25 @@
           <div class="card-header" data-background-color="red">
             <div class="row">
               <div class="col-md-8">
-                  <h3 class="title">Opciones para Comprar</h3>
+                <h3 class="title">Opciones para Comprar</h3>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-2">
                 <div class="form-group form-black">
-                    <label for="exampleFormControlSelect1">Tipo de Opción</label>
-                    <select #selectTypeBuyer class="form-control" [value]="parameters.buyer.type" (change)="change('buyer', 'type', selectTypeBuyer.value)">
-                      <option>Put</option>
-                      <option>Call</option>
-                    </select>
-                    <select #selectRegionBuyer class="form-control" [value]="parameters.buyer.region" (change)="change('buyer', 'region', selectRegionBuyer.value)">
-                      <option>Europea</option>
-                      <option>Americana</option>
-                    </select>
+                  <label for="exampleFormControlSelect1">Tipo de Opción</label>
+                  <select #selectTypeBuyer class="form-control" [value]="parameters.buyer.type" (change)="change('buyer', 'type', selectTypeBuyer.value)">
+                    <option>Put</option>
+                    <option>Call</option>
+                  </select>
+                  <select #selectRegionBuyer class="form-control" [value]="parameters.buyer.region" (change)="change('buyer', 'region', selectRegionBuyer.value)">
+                    <option>Europea</option>
+                    <option>Americana</option>
+                  </select>
                 </div>
+              </div>
+              <div class="col-md-2">
+                <button type="button" (click)="to = 'buy'" class="btn btn-primary" data-toggle="modal" data-target="#popUpOptionForm">
+                  Añadir Opción
+                </button>
               </div>
             </div>
           </div>
@@ -189,4 +199,3 @@
     </div>
   </div>
 </div>
-

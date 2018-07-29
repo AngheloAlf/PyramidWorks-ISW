@@ -39,14 +39,18 @@ export class OptionsComponent implements OnInit {
     }
   };
   form: FormGroup;
+  to;
 
   constructor(private route: ActivatedRoute, private companyData: CompaniesService, private optionService: OptionsService, private fb: FormBuilder) {
     this.form = fb.group({
       'contract_name': [null, Validators.compose([Validators.required, Validators.maxLength(70)])],
-      'bid_price': [null, Validators.compose([Validators.required, Validators.maxLength(70)])],
-      'ask_price': [null, Validators.compose([Validators.required, Validators.maxLength(70)])],
-      'date': [null, Validators.compose([Validators.required, Validators.maxLength(70)])],
-      'strike_price': [null, Validators.compose([Validators.required, Validators.maxLength(10)])]
+      'bid_price': [null, Validators.compose([Validators.required, Validators.min(0)])],
+      'ask_price': [null, Validators.compose([Validators.required, Validators.min(0)])],
+      'expire_date': [null, Validators.required],
+      'strike_price': [null, Validators.compose([Validators.required, Validators.min(0)])],
+      'region': [null],
+      'to': [null],
+      'type': [null]
     });
   }
 
@@ -82,13 +86,13 @@ export class OptionsComponent implements OnInit {
         buyer = {
           to: 'buyer',
           type: optionValue,
-          region: this.parameters.seller.region
+          region: this.parameters.buyer.region
         }
       }
       else{
         buyer = {
           to: 'buyer',
-          type: this.parameters.seller.type,
+          type: this.parameters.buyer.type,
           region: optionValue
         }
       }
@@ -97,7 +101,8 @@ export class OptionsComponent implements OnInit {
   }
 
   addOption(option: Option): void{
-
+    option.pricing = null;
+    option.to = this.to === 'sell' ? true : false;
     this.optionService.add(this.company, option).subscribe( response => {
       
     })

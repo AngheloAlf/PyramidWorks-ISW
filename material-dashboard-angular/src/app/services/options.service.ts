@@ -36,6 +36,7 @@ export class OptionsService {
   add(company: Company | number, option: Option){
     const idCompany = typeof company === 'number' ? company : company.id;
     const url = `/api/company/${idCompany}/options/`;
+    console.log(option);
     return this.http.post<Option>(url, option, httpOptions);
   }
 
