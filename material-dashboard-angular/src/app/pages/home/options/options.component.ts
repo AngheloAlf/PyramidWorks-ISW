@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Company } from '../../../models/Company';
+import { Option } from '../../../models/Option';
+import { OptionsService } from '../../../services/options.service';
 import { CompaniesService } from '../../../services/companies.service';
+import { FormBuilder, FormGroup, Validators} from  '@angular/forms';
 
 interface Parameter{
   seller: {
@@ -9,7 +12,7 @@ interface Parameter{
     region: string,
     type: string
   },
-  buyer: { 
+  buyer: {
     to: string,
     region: string,
     type: string
@@ -34,9 +37,17 @@ export class OptionsComponent implements OnInit {
       region: 'Europea',
       type: 'Call'
     }
-  }
+  };
+  form: FormGroup;
 
-  constructor(private route: ActivatedRoute, private companyData: CompaniesService) {
+  constructor(private route: ActivatedRoute, private companyData: CompaniesService, private optionService: OptionsService, private fb: FormBuilder) {
+    this.form = fb.group({
+      'contract_name': [null, Validators.compose([Validators.required, Validators.maxLength(70)])],
+      'bid_price': [null, Validators.compose([Validators.required, Validators.maxLength(70)])],
+      'ask_price': [null, Validators.compose([Validators.required, Validators.maxLength(70)])],
+      'date': [null, Validators.compose([Validators.required, Validators.maxLength(70)])],
+      'strike_price': [null, Validators.compose([Validators.required, Validators.maxLength(10)])]
+    });
   }
 
   ngOnInit() {
@@ -83,5 +94,12 @@ export class OptionsComponent implements OnInit {
       }
     }
     this.parameters = {seller: seller, buyer:buyer};
+  }
+
+  addOption(option: Option): void{
+
+    this.optionService.add(this.company, option).subscribe( response => {
+      
+    })
   }
 }

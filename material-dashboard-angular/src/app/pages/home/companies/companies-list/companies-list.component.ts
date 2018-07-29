@@ -64,9 +64,7 @@ export class CompaniesListComponent implements OnInit, OnChanges {
   addCompany(company: Company): void{
     this.newCompany = company;
     this.companiesData.add(company).subscribe( response => {
-      console.log(response);
       this.companies.push(response);
-      console.log(this.companies);
     })
   }
 
