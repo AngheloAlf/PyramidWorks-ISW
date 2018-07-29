@@ -21,7 +21,7 @@ class Option(models.Model):
     to = models.BooleanField(default=False)
     pricing = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
 
-    region = models.DecimalField(max_digits=12, decimal_places=2)
+    region = models.BooleanField()
 
     def __str__(self):
         return self.contract_name
