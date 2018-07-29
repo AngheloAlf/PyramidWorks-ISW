@@ -26,12 +26,12 @@ export class OptionsComponent implements OnInit {
   parameters: Parameter = {
     seller: {
       to: 'seller',
-      region: 'Simulación Europea',
+      region: 'Europea',
       type: 'Call'
     },
     buyer: {
       to: 'buyer',
-      region: 'Simulación Europea',
+      region: 'Europea',
       type: 'Call'
     }
   }

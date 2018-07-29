@@ -11,13 +11,14 @@ import { OptionsService } from '../../../../services/options.service';
 export class OptionListComponent implements OnInit, OnChanges {
 
   private _parameters;
+  show: boolean;
   @Input() company: Company;
   @Input() 
   set parameters(parameters){
     this._parameters = {
       to: parameters.to === 'seller' ? true : false,
       type: parameters.type === 'Put' ? true : false,
-      region: parameters.region
+      region: parameters.region === 'Europea' ? true : false
     }
   }
   options: Option[];
@@ -29,13 +30,16 @@ export class OptionListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(){
-    console.log(this._parameters);
     this.listOptions();
   }
 
   listOptions(){
     this.DataOptions.list(this.company).subscribe( options => {
-      this.options = options.filter( option => option.to === this.parameters.to && option.type === this.parameters.type);
-    })
+      console.log(options);
+      this.options = options.filter( option => option.to === this._parameters.to 
+                                              && option.type === this._parameters.type
+                                              && option.region === this._parameters.region);
+      this.show = this.options.length == 0 ? false : true;
+    });
   }
 }

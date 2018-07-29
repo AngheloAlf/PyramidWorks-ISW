@@ -1,4 +1,5 @@
-<div class="card-content table-responsive">
+<h2 *ngIf="!show"> No hay datos</h2>
+<div *ngIf="show" class="card-content table-responsive">
   <table class="table">
     <thead class="text-danger">
       <tr>
