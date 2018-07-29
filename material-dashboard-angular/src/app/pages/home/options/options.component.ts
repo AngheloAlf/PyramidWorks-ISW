@@ -3,6 +3,18 @@ import { ActivatedRoute } from '@angular/router';
 import { Company } from '../../../models/Company';
 import { CompaniesService } from '../../../services/companies.service';
 
+interface Parameter{
+  seller: {
+    to: string,
+    region: string,
+    type: string
+  },
+  buyer: { 
+    to: string,
+    region: string,
+    type: string
+  }
+}
 @Component({
   selector: 'app-options',
   templateUrl: './options.component.html',
@@ -11,21 +23,20 @@ import { CompaniesService } from '../../../services/companies.service';
 export class OptionsComponent implements OnInit {
 
   company: Company;
-  parameters = {
+  parameters: Parameter = {
     seller: {
       to: 'seller',
-      calculation: '',
-      type: ''
+      region: 'Simulación Europea',
+      type: 'Call'
     },
-    buyer: { 
+    buyer: {
       to: 'buyer',
-      calculation: '',
-      type: ''
-    },
-  };
+      region: 'Simulación Europea',
+      type: 'Call'
+    }
+  }
 
   constructor(private route: ActivatedRoute, private companyData: CompaniesService) {
-    
   }
 
   ngOnInit() {
@@ -35,5 +46,42 @@ export class OptionsComponent implements OnInit {
     });
   }
 
-  
+  change(to, option, optionValue){
+    console.log('wea');
+    let seller = this.parameters.seller;
+    let buyer = this. parameters.buyer;
+    if(to === 'seller'){
+      if (option == 'type'){
+        seller = {
+          to: 'seller',
+          type: optionValue,
+          region: this.parameters.seller.region
+        }
+      }
+      else{
+        seller = {
+          to: 'seller',
+          type: this.parameters.seller.type,
+          region: optionValue
+        }
+      }
+    }
+    else{
+      if (option == 'type'){
+        buyer = {
+          to: 'buyer',
+          type: optionValue,
+          region: this.parameters.seller.region
+        }
+      }
+      else{
+        buyer = {
+          to: 'buyer',
+          type: this.parameters.seller.type,
+          region: optionValue
+        }
+      }
+    }
+    this.parameters = {seller: seller, buyer:buyer};
+  }
 }

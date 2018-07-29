@@ -23,12 +23,13 @@
               <div class="col-md-4">
                 <div class="form-group form-black">
                     <label for="exampleFormControlSelect1">Tipo de Opción</label>
-                    <select class="form-control" [(ngModel)]="parameters.seller.type" id="exampleFormControlSelect1">
+                    <select #selectTypeSeller class="form-control" (change)="change('seller', 'type', selectTypeSeller.value)">
                       <option>Put</option>
                       <option>Call</option>
                     </select>
-                    <select class="form-control" [(ngModel)]="parameters.seller.calculation" id="exampleFormControlSelect1">
-                      <option>Simulación Europea</option>
+                    <select #selectRegionSeller class="form-control" (change)="change('seller', 'calculation', selectRegionSeller.value)">
+                      <option>Europea</option>
+                      <option>Americana</option>
                     </select>
                 </div>
               </div>
@@ -49,12 +50,13 @@
               <div class="col-md-4">
                 <div class="form-group form-black">
                     <label for="exampleFormControlSelect1">Tipo de Opción</label>
-                    <select class="form-control" [(ngModel)]="parameters.buyer.type" id="exampleFormControlSelect1">
+                    <select #selectTypeBuyer class="form-control" (change)="change('buyer', 'type', selectTypeBuyer.value)">
                       <option>Put</option>
                       <option>Call</option>
                     </select>
-                    <select class="form-control" [(ngModel)]="parameters.buyer.calculation" id="exampleFormControlSelect1">
-                      <option>Simulación Europea</option>
+                    <select #selectRegionBuyer class="form-control" (change)="change('buyer', 'region', selectRegionBuyer.value)">
+                      <option>Europea</option>
+                      <option>Americana</option>
                     </select>
                 </div>
               </div>

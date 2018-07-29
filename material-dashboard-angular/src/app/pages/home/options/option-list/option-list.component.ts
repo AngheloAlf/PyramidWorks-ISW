@@ -10,12 +10,16 @@ import { OptionsService } from '../../../../services/options.service';
 })
 export class OptionListComponent implements OnInit, OnChanges {
 
+  private _parameters;
   @Input() company: Company;
-  @Input() parameters: {
-    calculation: string,
-    to: boolean,
-    type: boolean
-  };
+  @Input() 
+  set parameters(parameters){
+    this._parameters = {
+      to: parameters.to === 'seller' ? true : false,
+      type: parameters.type === 'Put' ? true : false,
+      region: parameters.region
+    }
+  }
   options: Option[];
 
   constructor(private DataOptions: OptionsService) {
@@ -25,7 +29,7 @@ export class OptionListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(){
-    console.log(this.parameters);
+    console.log(this._parameters);
     this.listOptions();
   }
 

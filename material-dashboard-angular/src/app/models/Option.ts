@@ -7,5 +7,6 @@ export class Option{
     expire_date: string;
     type: boolean;
     to: boolean;
+    region: boolean;
     pricing: number;
 }
