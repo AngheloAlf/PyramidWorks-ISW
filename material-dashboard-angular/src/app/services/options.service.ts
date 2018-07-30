@@ -10,18 +10,18 @@ const httpOptions = {
 @Injectable()
 export class OptionsService {
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     console.log('OptionService is working.')
   }
 
   list(company?: Company | number){
     let url;
     if (company){
-      const id = typeof company === 'number' ? company : company.id; 
+      const id = typeof company === 'number' ? company : company.id;
       url = `/api/company/${id}/options/`;
     }
     else{
-      url = '/api/options/'; 
+      url = '/api/options/';
     }
     return this.http.get<Option[]>(url);
   }
@@ -42,7 +42,7 @@ export class OptionsService {
 
   edit(company: Company | number, option: Option){
     const idCompany = typeof company === 'number' ? company : company.id;
-    const url = `/api/company/${idCompany}/options/${option.id}`;
+    const url = `/api/company/${idCompany}/options/${option.id}/`;
     return this.http.put<Option>(url, option, httpOptions);
   }
 

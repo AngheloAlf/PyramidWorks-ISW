@@ -133,9 +133,9 @@ export class OptionsComponent implements OnInit {
   }
 
   receiveOption(eventCompany){
-    alert("Recivido");
     console.log(eventCompany);
     this.option_recived = eventCompany;
+    /*
     document.getElementById("edit_contract_name").setAttribute("value", this.option_recived.contract_name);
     document.getElementById("edit_contract_name_label").classList.remove("is-empty");
 
@@ -159,12 +159,53 @@ export class OptionsComponent implements OnInit {
 
     document.getElementById("edit_date").setAttribute("value", this.option_recived.expire_date);
     document.getElementById("edit_date_label").classList.remove("is-empty");
+    */
+
+    document.getElementById("edit_contract_name_label").classList.remove("is-empty");
+
+    document.getElementById("edit_strike_price_label").classList.remove("is-empty");
+
+    document.getElementById("edit_bid_price_label").classList.remove("is-empty");
+
+    document.getElementById("edit_ask_price_label").classList.remove("is-empty");
+
+    // document.getElementById("edit_date").setAttribute("value", this.option_recived.expire_date);
+    document.getElementById("edit_date_label").classList.remove("is-empty");
+
+    this.form2.controls['contract_name'].setValue(this.option_recived.contract_name);
+    this.form2.controls['strike_price'].setValue(this.option_recived.strike_price);
+    this.form2.controls['bid_price'].setValue(this.option_recived.bid_price);
+    this.form2.controls['ask_price'].setValue(this.option_recived.ask_price);
+    this.form2.controls['type'].setValue(this.option_recived.type);
+    this.form2.controls['to'].setValue(this.option_recived.to);
+    this.form2.controls['expire_date'].setValue(this.option_recived.expire_date);
+
+  }
+
+  volverNumero(numero: string | number): number{
+    let coso;
+    if(typeof numero == "string"){
+      coso = parseInt(numero);
+    }
+    else{
+      coso = numero;
+    }
+    return coso;
   }
 
   updateOption(option: Option): void{
     option.pricing = this.option_recived.pricing;
     option.id = this.option_recived.id;
 
+
+    /*
+    option.ask_price = this.volverNumero(option.ask_price);
+    option.bid_price = this.volverNumero(option.bid_price);
+    option.strike_price = this.volverNumero(option.strike_price);
+*/
+
+    console.log("wea: ");
+    console.log(option);
     this.optionService.edit(this.company, option).subscribe(response => {
       alert(response);
       alert("Actualizado!");
