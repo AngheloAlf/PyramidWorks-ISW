@@ -5,8 +5,7 @@ import { Option } from '../../../models/Option';
 import { OptionsService } from '../../../services/options.service';
 import { CompaniesService } from '../../../services/companies.service';
 import { FormBuilder, FormGroup, Validators} from  '@angular/forms';
-import { $ } from 'protractor';
-
+declare var $: any;
 interface Parameter{
   seller: {
     to: string,
@@ -47,6 +46,7 @@ export class OptionsComponent implements OnInit {
   form2: FormGroup;
   to;
   ready: boolean = false;
+  hidden: boolean = false;
   option_recived: Option;
 
   constructor(private route: ActivatedRoute, private companyData: CompaniesService, private optionService: OptionsService, private fb: FormBuilder) {
@@ -128,8 +128,8 @@ export class OptionsComponent implements OnInit {
       else{
         this.buyerList.listOptions();
       }
-      //this.popUpOptionForm.modal('hide');
-    })
+      $('#popUpOptionForm').modal('hide');
+    });
   }
 
   receiveOption(eventCompany){
