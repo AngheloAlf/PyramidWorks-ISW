@@ -44,11 +44,23 @@ export class OptionsComponent implements OnInit {
     }
   };
   form: FormGroup;
+  form2: FormGroup;
   to;
   ready: boolean = false;
+  option_recived: Option;
 
   constructor(private route: ActivatedRoute, private companyData: CompaniesService, private optionService: OptionsService, private fb: FormBuilder) {
     this.form = fb.group({
+      'contract_name': [null, Validators.compose([Validators.required, Validators.maxLength(70)])],
+      'bid_price': [null, Validators.compose([Validators.required, Validators.min(0)])],
+      'ask_price': [null, Validators.compose([Validators.required, Validators.min(0)])],
+      'expire_date': [null, Validators.required],
+      'strike_price': [null, Validators.compose([Validators.required, Validators.min(0)])],
+      'region': [null],
+      'to': [null],
+      'type': [null]
+    });
+    this.form2 = fb.group({
       'contract_name': [null, Validators.compose([Validators.required, Validators.maxLength(70)])],
       'bid_price': [null, Validators.compose([Validators.required, Validators.min(0)])],
       'ask_price': [null, Validators.compose([Validators.required, Validators.min(0)])],
@@ -118,5 +130,45 @@ export class OptionsComponent implements OnInit {
       }
       //this.popUpOptionForm.modal('hide');
     })
+  }
+
+  receiveOption(eventCompany){
+    alert("Recivido");
+    console.log(eventCompany);
+    this.option_recived = eventCompany;
+    document.getElementById("edit_contract_name").setAttribute("value", this.option_recived.contract_name);
+    document.getElementById("edit_contract_name_label").classList.remove("is-empty");
+
+    document.getElementById("edit_region").setAttribute("selectedIndex", this.option_recived.region ? "1" : "0");
+    document.getElementById("edit_region").setAttribute("value", this.option_recived.region ? "Europea" : "Americana");
+
+    document.getElementById("edit_strike_price").setAttribute("value", this.option_recived.strike_price.toString());
+    document.getElementById("edit_strike_price_label").classList.remove("is-empty");
+
+    document.getElementById("edit_bid_price").setAttribute("value", this.option_recived.bid_price.toString());
+    document.getElementById("edit_bid_price_label").classList.remove("is-empty");
+
+    document.getElementById("edit_ask_price").setAttribute("value", this.option_recived.ask_price.toString());
+    document.getElementById("edit_ask_price_label").classList.remove("is-empty");
+
+    document.getElementById("edit_type").setAttribute("selectedIndex", this.option_recived.type ? "1" : "0");
+    document.getElementById("edit_type").setAttribute("value", this.option_recived.type ? "Put" : "Call");
+
+    document.getElementById("edit_to").setAttribute("selectedIndex", this.option_recived.type ? "1" : "0");
+    document.getElementById("edit_to").setAttribute("value", this.option_recived.type ? "Sell" : "Buy");
+
+    document.getElementById("edit_date").setAttribute("value", this.option_recived.expire_date);
+    document.getElementById("edit_date_label").classList.remove("is-empty");
+  }
+
+  updateOption(option: Option): void{
+    option.pricing = this.option_recived.pricing;
+    option.id = this.option_recived.id;
+
+    this.optionService.edit(this.company, option).subscribe(response => {
+      alert(response);
+      alert("Actualizado!");
+      }
+    );
   }
 }
