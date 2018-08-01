@@ -79,14 +79,14 @@ def getCalculation(request):
     simu = int(request.GET['simu'])
     tasa = float(request.GET['tasa'])
 
-    option = Option.objects.filter(id=option_id)
-    strike_price = option[0].strike_price
-    if option[0].type:
+    option = Option.objects.filter(id=option_id)[0]
+    strike_price = option.strike_price
+    if option.type:
         option_type = 'put'
     else:
         option_type = 'call'
 
-    hd = option[0].company.stock_set.all().order_by('-date')[:days]
+    hd = option.company.stock_set.all().order_by('-date')[:days]
     historical_data = list(map(lambda x: float(x.open_price), hd))
 
     script = load_r.r_script('local_API/calculation/r_scripts/slave.R')
@@ -101,6 +101,9 @@ def getCalculation(request):
                          option_type,#type of option
                          tasa,#risk-free rate
                          )[0]
+
+    option.pricing = result
+    option.save()
 
     return JsonResponse({'error': 'None', 'value': result})
 
