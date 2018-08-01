@@ -31,7 +31,7 @@
         <td>{{option.expire_date}}</td>
         <td class="text-danger">{{option.pricing}}</td>
         <td>
-          <button type="button" rel="tooltip" title="Editar Opción" data-toggle="modal" data-modal="popUpOptionEdit" data-target="#popUpOptionEdit"  class="btn btn-warning btn-simple btn-xs">
+          <button type="button" (click)="sendOption(option)" rel="tooltip" title="Editar Opción" data-toggle="modal" data-modal="popUpOptionEdit" data-target="#popUpOptionEdit"  class="btn btn-warning btn-simple btn-xs">
             <i class="material-icons">edit</i>
           </button>
           <button type="button" rel="tooltip" title="Eliminar Opción" (click)="deleteOption(option)" class="btn btn-danger btn-simple btn-xs">

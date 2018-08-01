@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import {Component, OnInit, OnChanges, Input, Output, EventEmitter} from '@angular/core';
 import { Company } from '../../../../models/Company';
 import { Option } from '../../../../models/Option';
 import { OptionsService } from '../../../../services/options.service';
@@ -13,6 +13,7 @@ export class OptionListComponent implements OnInit, OnChanges {
 
   private _parameters;
   show: boolean;
+  @Output() optionEvent = new EventEmitter<Option>();
   @Input() company: Company;
   @Input()
   set parameters(parameters) {
@@ -64,6 +65,11 @@ export class OptionListComponent implements OnInit, OnChanges {
     this.options.push(option);
   }
 
+  editOption(option){
+    const idx = this.options.findIndex( _option => _option.id = option.id);
+    this.options[idx] = option;
+  }
+
   deleteOption(option: Option) {
     if (confirm(`¿Estas seguro que quieres eliminar ${option.contract_name}?`)) {
       this.DataOptions.delete(this.company, option.id).subscribe(res => {
@@ -72,4 +78,10 @@ export class OptionListComponent implements OnInit, OnChanges {
       });
     }
   }
+
+  sendOption(option: Option){
+    console.log(option);
+    this.optionEvent.emit(option);
+  }
+
 }

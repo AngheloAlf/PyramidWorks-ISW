@@ -117,13 +117,20 @@
                 <div class="col-md-8">
                   <h3 class="title modal-title">Editar opciones</h3>
                 </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-1">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="col-md-1">
+                </div>
               </div>
             </div>
 
-            <form [formGroup]="form">
+            <form [formGroup]="form2" (ngSubmit)="updateOption(form2.value)" > <!--[formGroup]="form2">-->
               <div class="">
                 <div class="modal-body">
 
@@ -131,17 +138,17 @@
 
 
                     <div class="col-md-6">
-                      <div class="form-group label-floating">
+                      <div class="form-group label-floating" id="edit_contract_name_label">
                         <label class="control-label">Contract name</label>
-                        <input type="text" class="form-control" formControlName="contract_name">
+                        <input type="text" class="form-control"  formControlName="contract_name" id="edit_contract_name">
                       </div>
                     </div>
 
 
                     <div class="col-md-6">
-                      <select class="selectpicker">
-                        <option [ngValue]="true">Europea</option>
+                      <select class="selectpicker" id="edit_region" formControlName="region">
                         <option [ngValue]="false">Americana</option>
+                        <option [ngValue]="true">Europea</option>
                       </select>
                     </div>
 
@@ -150,23 +157,23 @@
 
                   <div class="row">
                     <div class="col-md-4">
-                      <div class="form-group label-floating">
+                      <div class="form-group label-floating" id="edit_strike_price_label">
                         <label class="control-label">Strike price</label>
-                        <input type="number" step="any" class="form-control" formControlName="strike_price" >
+                        <input type="number" step="any" class="form-control" formControlName="strike_price" id="edit_strike_price">
                       </div>
                     </div>
 
                     <div class="col-md-4">
-                      <div class="form-group label-floating">
+                      <div class="form-group label-floating" id="edit_bid_price_label">
                         <label class="control-label">Bid price</label>
-                        <input type="number" step="any" class="form-control" formControlName="bid_price" >
+                        <input type="number" step="any" class="form-control"  formControlName="bid_price"  id="edit_bid_price">
                       </div>
                     </div>
 
                     <div class="col-md-4">
-                      <div class="form-group label-floating">
+                      <div class="form-group label-floating" id="edit_ask_price_label">
                         <label class="control-label">Ask price</label>
-                        <input type="number" step="any" class="form-control" formControlName="ask_price">
+                        <input type="number" step="any" class="form-control" formControlName="ask_price"  id="edit_ask_price">
                       </div>
                     </div>
                   </div>
@@ -175,14 +182,14 @@
                   <div class="row">
 
                     <div class="col-md-6">
-                      <select class="selectpicker" >
-                        <option [ngValue]="true">Put</option>
+                      <select class="selectpicker"  id="edit_type" >
                         <option [ngValue]="false">Call</option>
+                        <option [ngValue]="true">Put</option>
                       </select>
                     </div>
 
                     <div class="col-md-6">
-                      <select class="selectpicker" >
+                      <select class="selectpicker" id="edit_to" >
                         <option [ngValue]="false">Buy</option>
                         <option [ngValue]="true">Sell</option>
                       </select>
@@ -196,9 +203,9 @@
                     </div>
 
                     <div class="col-md-4">
-                      <div class="form-group">
+                      <div class="form-group label-floating"  id="edit_date_label">
                         <label class="control-label">Expire date</label>
-                        <input type="date" class="form-control" formControlName="expire_date">
+                        <input type="date" class="form-control" formControlName="expire_date" id="edit_date">
                       </div>
                     </div>
                   </div>
@@ -242,7 +249,7 @@
               <div class="col-md-2">
                 <div class="form-group form-black">
                   <label for="exampleFormControlSelect1">Tipo de Opción</label>
-                  <select #selectTypeSeller class="form-control" [value]="parameters.seller.type" (change)="change('seller', 'type', selectTypeSeller.value)">
+                  <select #selectTypeSeller class="form-control selectpicker" [value]="parameters.seller.type" (change)="change('seller', 'type', selectTypeSeller.value)">
                     <option>Put</option>
                     <option>Call</option>
                   </select>
@@ -266,7 +273,7 @@
             </div>
           </div>
 
-          <app-option-list [company]="company" [parameters]="parameters.seller" #sellerList></app-option-list>
+          <app-option-list [company]="company" [parameters]="parameters.seller" #sellerList (optionEvent)="receiveOption($event)"></app-option-list>
         </div>
       </div>
     </div>
@@ -281,11 +288,11 @@
               <div class="col-md-2">
                 <div class="form-group form-black">
                   <label for="exampleFormControlSelect1">Tipo de Opción</label>
-                  <select #selectTypeBuyer class="form-control" [value]="parameters.buyer.type" (change)="change('buyer', 'type', selectTypeBuyer.value)">
+                  <select #selectTypeBuyer class="form-control selectpicker" [value]="parameters.buyer.type" (change)="change('buyer', 'type', selectTypeBuyer.value)">
                     <option>Put</option>
                     <option>Call</option>
                   </select>
-                  <select #selectRegionBuyer class="form-control" [value]="parameters.buyer.region" (change)="change('buyer', 'region', selectRegionBuyer.value)">
+                  <select #selectRegionBuyer class="form-control selectpicker" [value]="parameters.buyer.region" (change)="change('buyer', 'region', selectRegionBuyer.value)">
                     <option>Europea</option>
                     <option>Americana</option>
                   </select>
@@ -304,7 +311,7 @@
               </div>
             </div>
           </div>
-          <app-option-list [company]="company" [parameters]="parameters.buyer" #buyerList></app-option-list>
+          <app-option-list [company]="company" [parameters]="parameters.buyer" #buyerList (optionEvent)="receiveOption($event)" ></app-option-list>
         </div>
       </div>
     </div>
