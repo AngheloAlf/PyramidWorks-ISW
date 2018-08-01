@@ -16,11 +16,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let option of options">
+      <tr *ngFor="let option of (options | filter : _parameters)">
         <td>
             <div class="checkbox">
               <label>
-                <input type="checkbox" name="optionsCheckboxes">
+                <input type="checkbox" name="optionsCheckboxes" [(ngModel)]="option.select">
               </label>
             </div>
         </td>
@@ -41,4 +41,28 @@
       </tr>
     </tbody>
   </table>
+  <form>
+    <div class="row">
+      <div class="col-md-5">
+          <div class="form-group form-black label-floating is-empty">
+              <label class="control-label">Company (disabled)</label>
+              <input type="text" class="form-control" disabled>
+          </div>
+      </div>
+      <div class="col-md-3">
+          <div class="form-group form-black label-floating is-empty">
+              <label class="control-label">Username</label>
+              <input type="text" class="form-control" >
+          </div>
+      </div>
+      <div class="col-md-4">
+          <div class="form-group form-black label-floating is-empty">
+              <label class="control-label">Email address</label>
+              <input type="email" class="form-control" >
+          </div>
+      </div>
+    </div>
+  </form>
 </div>
+
+

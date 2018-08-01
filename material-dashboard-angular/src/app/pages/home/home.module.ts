@@ -19,7 +19,8 @@ import { CompaniesComponent } from './companies/companies.component';
 import { CompaniesListComponent } from './companies/companies-list/companies-list.component';
 import { CompaniesStockChartsComponent } from './companies/companies-stock-charts/companies-stock-charts.component';
 import { OptionsComponent } from './options/options.component';
-import { OptionListComponent } from './options/option-list/option-list.component'
+import { OptionListComponent } from './options/option-list/option-list.component';
+import { FilterPipe } from './options/option-list/filter.pipe'
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { OptionListComponent } from './options/option-list/option-list.component
     CompaniesListComponent,
     CompaniesStockChartsComponent,
     OptionsComponent,
-    OptionListComponent
+    OptionListComponent,
+    FilterPipe
   ]
 })
 export class HomeModule { }

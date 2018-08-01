@@ -29,6 +29,7 @@
     "bootstrap-select": "^1.13.1",
     "core-js": "^2.5.7",
     "fs": "0.0.1-security",
+    "moment-business-days": "^1.0.6",
     "path": "^0.12.7",
     "plotly.js": "^1.39.2",
     "rxjs": "^5.5.11",

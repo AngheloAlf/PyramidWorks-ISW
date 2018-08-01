@@ -123,7 +123,7 @@
               </div>
             </div>
 
-            <form >
+            <form [formGroup]="form">
               <div class="">
                 <div class="modal-body">
 
@@ -221,8 +221,8 @@
     </div>
   </div>
 
-  <div class="container-fluid">
-    <div class="card card-plain" *ngIf="ready">
+  <div class="container-fluid" *ngIf="ready">
+    <div class="card card-plain">
       <div class="card-header" data-background-color="blue">
         <div class="row">
           <div class="col-md-12">
@@ -236,7 +236,7 @@
         <div class="card">
           <div class="card-header" data-background-color="red">
             <div class="row">
-              <div class="col-md-8">
+              <div class="col-md-7">
                 <h3 class="title">Opciones para Vender</h3>
               </div>
               <div class="col-md-2">
@@ -246,15 +246,21 @@
                     <option>Put</option>
                     <option>Call</option>
                   </select>
-                  <select #selectRegionSeller class="form-control" [value]="parameters.seller.region" (change)="change('seller', 'calculation', selectRegionSeller.value)">
+                  <select #selectRegionSeller class="form-control" [value]="parameters.seller.region" (change)="change('seller', 'region', selectRegionSeller.value)">
                     <option>Europea</option>
                     <option>Americana</option>
                   </select>
                 </div>
               </div>
-              <div class="col-md-2">
+              <div class="col-md-3">
                 <button type="button" (click)="to = 'sell'" class="btn btn-primary"  data-toggle="modal" data-modal="popUpOptionForm" data-target="#popUpOptionForm">
                   Añadir Opción
+                </button>
+                <button *ngIf="!parameters.seller.selectAll" type="button" (click)="change('seller','toggleAll', true)" class="btn btn-success">
+                  Seleccionar Todos
+                </button>
+                <button *ngIf="parameters.seller.selectAll" type="button" (click)="change('seller','toggleAll', false)" class="btn btn-warning">
+                  Deseleccionar Todos
                 </button>
               </div>
             </div>
@@ -269,7 +275,7 @@
         <div class="card">
           <div class="card-header" data-background-color="red">
             <div class="row">
-              <div class="col-md-8">
+              <div class="col-md-7">
                 <h3 class="title">Opciones para Comprar</h3>
               </div>
               <div class="col-md-2">
@@ -288,6 +294,12 @@
               <div class="col-md-2">
                 <button type="button" (click)="to = 'buy'" class="btn btn-primary" data-toggle="modal" data-target="#popUpOptionForm">
                   Añadir Opción
+                </button>
+                <button *ngIf="!parameters.buyer.selectAll" type="button" (click)="change('buyer','toggleAll', true)" class="btn btn-success">
+                  Seleccionar Todos
+                </button>
+                <button *ngIf="parameters.buyer.selectAll" type="button" (click)="change('buyer','toggleAll', false)" class="btn btn-warning">
+                  Deseleccionar Todos
                 </button>
               </div>
             </div>

@@ -5,17 +5,20 @@ import { Option } from '../../../models/Option';
 import { OptionsService } from '../../../services/options.service';
 import { CompaniesService } from '../../../services/companies.service';
 import { FormBuilder, FormGroup, Validators} from  '@angular/forms';
+
 declare var $: any;
 interface Parameter{
   seller: {
     to: string,
     region: string,
-    type: string
+    type: string,
+    selectAll: boolean
   },
   buyer: {
     to: string,
     region: string,
-    type: string
+    type: string,
+    selectAll: boolean
   }
 }
 @Component({
@@ -34,12 +37,14 @@ export class OptionsComponent implements OnInit {
     seller: {
       to: 'seller',
       region: 'Europea',
-      type: 'Call'
+      type: 'Call',
+      selectAll: false
     },
     buyer: {
       to: 'buyer',
       region: 'Europea',
-      type: 'Call'
+      type: 'Call',
+      selectAll: false
     }
   };
   form: FormGroup;
@@ -71,35 +76,56 @@ export class OptionsComponent implements OnInit {
   change(to, option, optionValue){
     let seller = this.parameters.seller;
     let buyer = this. parameters.buyer;
+    console.log(option, optionValue)
     if(to === 'seller'){
-      if (option == 'type'){
+      if (option === 'type'){
         seller = {
           to: 'seller',
           type: optionValue,
-          region: this.parameters.seller.region
+          region: seller.region,
+          selectAll: seller.selectAll
         }
       }
-      else{
+      if(option === 'toggleAll'){
         seller = {
           to: 'seller',
-          type: this.parameters.seller.type,
-          region: optionValue
+          type: seller.type,
+          region: seller.region,
+          selectAll: optionValue
+        }
+      }
+      if(option === 'region'){
+        seller = {
+          to: 'seller',
+          type: seller.type,
+          region: optionValue,
+          selectAll: seller.selectAll
         }
       }
     }
     else{
-      if (option == 'type'){
+      if (option === 'type'){
         buyer = {
           to: 'buyer',
           type: optionValue,
-          region: this.parameters.buyer.region
+          region: buyer.region,
+          selectAll: buyer.selectAll
         }
       }
-      else{
+      if(option === 'toggleAll'){
         buyer = {
           to: 'buyer',
-          type: this.parameters.buyer.type,
-          region: optionValue
+          type: buyer.type,
+          region: buyer.region,
+          selectAll: optionValue
+        }
+      }
+      if(option === 'region'){
+        buyer = {
+          to: 'buyer',
+          type: buyer.type,
+          region: optionValue,
+          selectAll: buyer.selectAll
         }
       }
     }
@@ -111,9 +137,11 @@ export class OptionsComponent implements OnInit {
     option.to = this.to === 'sell' ? true : false;
     this.optionService.add(this.company, option).subscribe( response => {
       if(option.to){
+        this.sellerList.pushOption(option)
         this.sellerList.listOptions();
       }
       else{
+        this.buyerList.pushOption(option)
         this.buyerList.listOptions();
       }
       $('#popUpOptionForm').modal('hide');

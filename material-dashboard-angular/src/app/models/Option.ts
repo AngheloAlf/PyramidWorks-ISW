@@ -9,4 +9,5 @@ export class Option{
     to: boolean;
     region: boolean;
     pricing: number;
+    select: boolean;
 }
