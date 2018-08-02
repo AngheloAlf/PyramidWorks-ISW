@@ -26,7 +26,8 @@
             ],
             "scripts": [
               "./node_modules/plotly.js/dist/plotly-basic.min.js",
-              "./node_modules/bootstrap-select/dist/js/bootstrap-select.js"
+              "./node_modules/bootstrap-select/dist/js/bootstrap-select.js",
+              "./node_modules/moment-business-days/index.js"
             ]
           },
           "configurations": {

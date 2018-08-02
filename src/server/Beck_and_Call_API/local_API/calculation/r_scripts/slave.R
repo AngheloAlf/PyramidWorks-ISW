@@ -102,6 +102,9 @@ Simulate <- function(r, volatility, seed, T, n, X){
 }
 
 MonteCarloSimulation <- function(businessDays, x, k, t, n, historicalData, numberOfSimulations, typeOfInv, riskFreeRate){
+    if(businessDays == 0){
+        return(0);
+    }
     T = businessDays/252;
     riskFreeRate = riskFreeRate * T;
     volatility_data = volatility(businessDays, historicalData);

@@ -5,3 +5,4 @@ interface NodeModule {
 }
 
 declare var Plotly: any;
+declare var moment: any;

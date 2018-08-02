@@ -41,25 +41,38 @@
       </tr>
     </tbody>
   </table>
-  <form>
+  <form [formGroup]="form" (ngSubmit)="calculate(form.value)">
+    <div class="row">
+      <div class="col-md-6">
+          <div class="form-group form-black label-floating is-empty">
+              <label class="control-label">Delay</label>
+              <input type="number" class="form-control" formControlName="delay">
+          </div>
+      </div>
+      <div class="col-md-6">
+          <div class="form-group form-black label-floating is-empty">
+              <label class="control-label">Grado de Discretización</label>
+              <input type="number" class="form-control" formControlName="disc">
+          </div>
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-5">
-          <div class="form-group form-black label-floating is-empty">
-              <label class="control-label">Company (disabled)</label>
-              <input type="text" class="form-control" disabled>
-          </div>
+        <div class="form-group form-black label-floating is-empty">
+            <label class="control-label">N° de Simulaciones</label>
+            <input type="number" class="form-control" formControlName="simu">
+        </div>
       </div>
-      <div class="col-md-3">
-          <div class="form-group form-black label-floating is-empty">
-              <label class="control-label">Username</label>
-              <input type="text" class="form-control" >
-          </div>
+      <div class="col-md-5">
+        <div class="form-group form-black label-floating is-empty">
+          <label class="control-label">Tasa libre de riesgo</label>
+          <input type="number" step="any" class="form-control" formControlName="free_rate">
+        </div>
       </div>
-      <div class="col-md-4">
-          <div class="form-group form-black label-floating is-empty">
-              <label class="control-label">Email address</label>
-              <input type="email" class="form-control" >
-          </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-info" [disabled]=!form.valid>
+          Calcular
+        </button>
       </div>
     </div>
   </form>

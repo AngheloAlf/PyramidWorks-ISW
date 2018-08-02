@@ -249,7 +249,7 @@
               <div class="col-md-2">
                 <div class="form-group form-black">
                   <label for="exampleFormControlSelect1">Tipo de Opción</label>
-                  <select #selectTypeSeller class="form-control selectpicker" [value]="parameters.seller.type" (change)="change('seller', 'type', selectTypeSeller.value)">
+                  <select #selectTypeSeller class="form-control" [value]="parameters.seller.type" (change)="change('seller', 'type', selectTypeSeller.value)">
                     <option>Put</option>
                     <option>Call</option>
                   </select>
@@ -288,11 +288,11 @@
               <div class="col-md-2">
                 <div class="form-group form-black">
                   <label for="exampleFormControlSelect1">Tipo de Opción</label>
-                  <select #selectTypeBuyer class="form-control selectpicker" [value]="parameters.buyer.type" (change)="change('buyer', 'type', selectTypeBuyer.value)">
+                  <select #selectTypeBuyer class="form-control" [value]="parameters.buyer.type" (change)="change('buyer', 'type', selectTypeBuyer.value)">
                     <option>Put</option>
                     <option>Call</option>
                   </select>
-                  <select #selectRegionBuyer class="form-control selectpicker" [value]="parameters.buyer.region" (change)="change('buyer', 'region', selectRegionBuyer.value)">
+                  <select #selectRegionBuyer class="form-control" [value]="parameters.buyer.region" (change)="change('buyer', 'region', selectRegionBuyer.value)">
                     <option>Europea</option>
                     <option>Americana</option>
                   </select>

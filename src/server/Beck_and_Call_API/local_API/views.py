@@ -85,25 +85,27 @@ def getCalculation(request):
         option_type = 'put'
     else:
         option_type = 'call'
-
+    print(option)
     hd = option.company.stock_set.all().order_by('-date')[:days]
     historical_data = list(map(lambda x: float(x.open_price), hd))
-
     script = load_r.r_script('local_API/calculation/r_scripts/slave.R')
-    result = script.load_function("MonteCarloSimulation",
-                         days,
-                         historical_data[0],#stock current value
-                         strike_price,#strike price
-                         delay,#delay
-                         disc,#discretization degree
-                         historical_data,#daily open value of stock
-                         simu,#number of simulations
-                         option_type,#type of option
-                         tasa,#risk-free rate
-                         )[0]
+    if(days == 0):
+        result = 0
+    else:
+        result = script.load_function("MonteCarloSimulation",
+                            days,
+                            historical_data[0],#stock current value
+                            strike_price,#strike price
+                            delay,#delay
+                            disc,#discretization degree
+                            historical_data,#daily open value of stock
+                            simu,#number of simulations
+                            option_type,#type of option
+                            tasa,#risk-free rate
+                            )[0]
 
-    option.pricing = result
-    option.save()
+        option.pricing = result
+        option.save()
 
     return JsonResponse({'error': 'None', 'value': result})
 

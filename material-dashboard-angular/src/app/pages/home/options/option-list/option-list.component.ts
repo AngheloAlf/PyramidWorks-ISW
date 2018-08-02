@@ -2,6 +2,8 @@ import {Component, OnInit, OnChanges, Input, Output, EventEmitter} from '@angula
 import { Company } from '../../../../models/Company';
 import { Option } from '../../../../models/Option';
 import { OptionsService } from '../../../../services/options.service';
+import { FormBuilder, FormGroup, Validators} from  '@angular/forms';
+import { CalculationsService } from '../../../../services/calculations.service';
 import * as _ from 'lodash';
 
 @Component({
@@ -25,9 +27,15 @@ export class OptionListComponent implements OnInit, OnChanges {
     }
   }
   options: Option[];
+  form: FormGroup;
 
-
-  constructor(private DataOptions: OptionsService) {
+  constructor(private DataOptions: OptionsService, private DataCalculation: CalculationsService, private fb: FormBuilder ) {
+    this.form = fb.group({
+      'delay': [null, Validators.compose([Validators.required, Validators.min(0)])],
+      'disc': [null, Validators.compose([Validators.required, Validators.min(0)])],
+      'free_rate': [null, Validators.compose([Validators.required, Validators.min(0)])],
+      'simu': [null, Validators.compose([Validators.required, Validators.min(0)])]
+    })
   }
 
   ngOnInit() {
@@ -84,4 +92,15 @@ export class OptionListComponent implements OnInit, OnChanges {
     this.optionEvent.emit(option);
   }
 
+  calculate(parameters){
+    const optionsToCal = this.options.filter(option => option.select);
+    optionsToCal.forEach(option => {
+      this.DataCalculation.europeanSimulation(option, parameters.delay, parameters.disc, parameters.simu, parameters.free_rate).subscribe(res => {
+        if(res.error == 'None'){
+          option.pricing = res.value;
+          this.editOption(option);
+        }
+      });
+    });
+  }
 }
